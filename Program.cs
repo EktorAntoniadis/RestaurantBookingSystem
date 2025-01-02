@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using RestaurantBookingSystem.Models;
+
 namespace RestaurantBookingSystem
 {
     public class Program
@@ -8,6 +11,9 @@ namespace RestaurantBookingSystem
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddDbContext<RestaurantBookingSystemDbContext>(options =>
+               options.UseMySql("server=127.0.0.1;uid=root;database=restaurantbookingb",
+               ServerVersion.AutoDetect("server=127.0.0.1;uid=root;database=restaurantbookingb")));
 
             var app = builder.Build();
 
