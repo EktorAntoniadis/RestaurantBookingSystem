@@ -16,6 +16,8 @@ namespace RestaurantBookingSystem.Data.Models
         DbSet<FoodItem> FoodItems { get; set; }
         DbSet<FoodCategory> FoodCategories { get; set; }
         DbSet<Employee> Employees { get; set; }
+        DbSet<TableStatus> TableStatuses { get; set; }
+        DbSet<Table> Tables { get; set; }
         public RestaurantBookingSystemDbContext(DbContextOptions options):base(options)
         {
             

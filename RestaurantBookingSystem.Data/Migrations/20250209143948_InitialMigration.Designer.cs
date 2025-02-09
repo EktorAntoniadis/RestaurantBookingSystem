@@ -9,10 +9,10 @@ using RestaurantBookingSystem.Data.Models;
 
 #nullable disable
 
-namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
+namespace RestaurantBookingSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingSystemDbContext))]
-    [Migration("20250209141902_InitialMigration")]
+    [Migration("20250209143948_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -233,6 +233,53 @@ namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("RestaurantBookingSystem.Data.Models.Table", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TableStatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.HasIndex("TableStatusId");
+
+                    b.ToTable("Tables");
+                });
+
+            modelBuilder.Entity("RestaurantBookingSystem.Data.Models.TableStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TableStatuses");
+                });
+
             modelBuilder.Entity("PermissionRole", b =>
                 {
                     b.HasOne("RestaurantBookingSystem.Data.Models.Permission", null)
@@ -309,6 +356,25 @@ namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
                         .IsRequired();
 
                     b.Navigation("Menu");
+                });
+
+            modelBuilder.Entity("RestaurantBookingSystem.Data.Models.Table", b =>
+                {
+                    b.HasOne("RestaurantBookingSystem.Data.Models.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantBookingSystem.Data.Models.TableStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("TableStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("RestaurantBookingSystem.Data.Models.FoodCategory", b =>

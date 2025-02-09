@@ -18,5 +18,6 @@ namespace RestaurantBookingSystem.Data.Models
         public int MenuId { get; set; }
         public Menu Menu { get; set; }
         public ICollection<Employee> Employees { get; set; }
+        public ICollection<Customer> Customers { get; set; }
     }
 }

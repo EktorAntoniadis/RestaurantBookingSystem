@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
+namespace RestaurantBookingSystem.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
@@ -46,6 +46,23 @@ namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TableStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TableStatuses", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -193,6 +210,35 @@ namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Tables",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    TableName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TableStatusId = table.Column<int>(type: "int", nullable: false),
+                    RestaurantId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tables", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tables_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tables_TableStatuses_TableStatusId",
+                        column: x => x.TableStatusId,
+                        principalTable: "TableStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_RestaurantId",
                 table: "Employees",
@@ -227,6 +273,16 @@ namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
                 name: "IX_Restaurants_MenuId",
                 table: "Restaurants",
                 column: "MenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tables_RestaurantId",
+                table: "Tables",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tables_TableStatusId",
+                table: "Tables",
+                column: "TableStatusId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Employees_Restaurants_RestaurantId",
@@ -270,6 +326,9 @@ namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
                 name: "PermissionRole");
 
             migrationBuilder.DropTable(
+                name: "Tables");
+
+            migrationBuilder.DropTable(
                 name: "FoodCategories");
 
             migrationBuilder.DropTable(
@@ -277,6 +336,9 @@ namespace RestaurantBookingSystem.Data.RestaurantBookingSystem.Data
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "TableStatuses");
 
             migrationBuilder.DropTable(
                 name: "Restaurants");
