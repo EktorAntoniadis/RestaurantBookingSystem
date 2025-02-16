@@ -18,6 +18,13 @@ namespace RestaurantBookingSystem.Data.Models
         DbSet<Employee> Employees { get; set; }
         DbSet<TableStatus> TableStatuses { get; set; }
         DbSet<Table> Tables { get; set; }
+        DbSet<TableOrder> TablesOrders { get; set; }
+        DbSet<ReservationStatus> ReservationStatuses { get; set; }
+        DbSet<Reservation> Reservations { get; set; }
+        DbSet<PaymentStatus> PaymentStatuses { get; set; }
+        DbSet<Payment> Payments { get; set; }
+        DbSet<OrderStatus> OrderStatuses { get; set; }
+        DbSet<Customer> Customers { get; set; }
         public RestaurantBookingSystemDbContext(DbContextOptions options):base(options)
         {
             

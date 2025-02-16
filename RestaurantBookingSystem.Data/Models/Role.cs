@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantBookingSystem.Data.Models
 {
-    public class Role : CommonData
+    public class Role: CommonData
     {
         [Key]
         public int Id { get; set; }

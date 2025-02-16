@@ -9,7 +9,7 @@ using RestaurantBookingSystem.Data.BaseModels;
 
 namespace RestaurantBookingSystem.Data.Models
 {
-    public class FoodItem : CommonData
+    public class FoodItem: CommonData
     {
         [Key]
         public int Id { get; set; }
@@ -17,5 +17,7 @@ namespace RestaurantBookingSystem.Data.Models
         [ForeignKey(nameof(FoodCategory))]
         public int FoodCategoryId { get; set; }
         public required FoodCategory FoodCategory { get; set; }
+
+        public ICollection<TableOrder> TableOrders { get; set; }
     }
 }

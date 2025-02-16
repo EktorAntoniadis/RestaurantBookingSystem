@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantBookingSystem.Data.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -7,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace RestaurantBookingSystem.Data.Models
 {
-    public class Table
+    public class Table: CommonData
     {
         public int Id { get; set; }
         public string TableName { get; set; }
+
+        public int NumberOfPeople { get; set; }
 
         [ForeignKey(nameof(TableStatus))]
         public int TableStatusId { get; set; }
