@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantBookingSystem.Data.Models;
+using RestaurantBookingSystem.Data.Seeding;
 
 namespace RestaurantBookingSystem.App
 {
@@ -13,7 +14,7 @@ namespace RestaurantBookingSystem.App
             builder.Services.AddRazorPages();
 
             builder.Services.AddDbContext<RestaurantBookingSystemDbContext>(options =>
-    options.UseMySql("server=127.0.0.1;uid=root;database=restaurantbookingdb",
+                options.UseMySql("server=127.0.0.1;uid=root;database=restaurantbookingdb",
                 ServerVersion.AutoDetect("server=127.0.0.1;uid=root;database=restaurantbookingdb")));
 
             var app = builder.Build();
@@ -34,6 +35,15 @@ namespace RestaurantBookingSystem.App
             app.UseAuthorization();
 
             app.MapRazorPages();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<RestaurantBookingSystemDbContext>();
+
+                var seeder = new DatabaseSeed(context);
+                seeder.SeedAdministrationData();
+            }
 
             app.Run();
         }
