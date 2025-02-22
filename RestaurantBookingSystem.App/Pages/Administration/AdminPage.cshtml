@@ -9,8 +9,11 @@
         <div class="position-sticky pt-3">
             <h4>Admin Panel</h4>
             <ul class="nav nav-pills flex-column">
-                <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Dashboard</a></li>
-                <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Restaurants</a></li>
+                <li class="nav-item">
+                    <a asp-page="/Administration/AdminPage" asp-route-view="_Dashboard" class="nav-link text-dark link-body-emphasis">Dashboard</a>
+                    </li>
+                <li class="nav-item">
+                    <a asp-page="/Administration/AdminPage" asp-route-view="_Restaurants" class="nav-link text-dark link-body-emphasis">Restaurants</a></li>
                 <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Employees</a></li>
                 <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Roles & Permissions</a></li>
             </ul>
@@ -24,3 +27,5 @@
         </div>
     </nav>
 }
+
+@await Html.PartialAsync(Model.ViewName)

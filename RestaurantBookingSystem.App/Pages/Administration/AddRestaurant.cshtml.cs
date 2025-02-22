@@ -22,7 +22,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration
             _context.Restaurants.Add(NewRestaurant);
             _context.SaveChanges();
 
-            return Page();
+            return RedirectToPage("/Administration/AdminPage");
         }
     }
 }
