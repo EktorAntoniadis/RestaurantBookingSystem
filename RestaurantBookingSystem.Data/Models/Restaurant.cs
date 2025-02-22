@@ -9,11 +9,28 @@ using System.Threading.Tasks;
 
 namespace RestaurantBookingSystem.Data.Models
 {
-    public class Restaurant: CommonData
+    public class Restaurant : CommonData
     {
         [Key]
         public int Id { get; set; }
+
         public Menu Menu { get; set; }
+
+        [Required]
+        public required string Address { get; set; }
+
+        [Required]
+        public required string City { get; set; }
+
+        [Required]
+        public required string Country { get; set; }
+
+        [Required]
+        public required string BusinessRegistrationNumber { get; set; }
+
+        [Required]
+        public required string PostalCode { get; set; }
+
         public ICollection<Employee> Employees { get; set; }
         public ICollection<Customer> Customers { get; set; }
     }
