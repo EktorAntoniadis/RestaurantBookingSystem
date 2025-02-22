@@ -1,0 +1,56 @@
+﻿@page
+@model AddRestaurantModel
+@{
+    ViewData["Add Restaurant"] = "Add Restaurant";
+}
+
+<h2 class="mb-4">Add New Restaurant</h2>
+
+<div class="card p-4 shadow-sm">
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="NewRestaurant.Name" class="form-label fw-bold">Name of Restaurant</label>
+            <input asp-for="NewRestaurant.Name" class="form-control" placeholder="Type the name">
+            <span asp-validation-for="NewRestaurant.Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NewRestaurant.Description" class="form-label fw-bold">Description of Restaurant</label>
+            <textarea class="form-control" asp-for="NewRestaurant.Description"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NewRestaurant.Address" class="form-label fw-bold">Address</label>
+            <input asp-for="NewRestaurant.Address" class="form-control" placeholder="Type the name">
+            <span asp-validation-for="NewRestaurant.Address" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NewRestaurant.City" class="form-label fw-bold">City</label>
+            <input asp-for="NewRestaurant.City" class="form-control" placeholder="Type the city">
+            <span asp-validation-for="NewRestaurant.City" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NewRestaurant.Country" class="form-label fw-bold">Country</label>
+            <input asp-for="NewRestaurant.Country" class="form-control" placeholder="Type the country">
+            <span asp-validation-for="NewRestaurant.Country" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NewRestaurant.BusinessRegistrationNumber" class="form-label fw-bold">Business Registration Number</label>
+            <input asp-for="NewRestaurant.BusinessRegistrationNumber" class="form-control" placeholder="Type the business registration number">
+            <span asp-validation-for="NewRestaurant.BusinessRegistrationNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NewRestaurant.PostalCode" class="form-label fw-bold">Postal Code</label>
+            <input asp-for="NewRestaurant.PostalCode" class="form-control" placeholder="Type the postal code">
+            <span asp-validation-for="NewRestaurant.PostalCode" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Add restaurant</button>
+            @* <a asp-page="RestaurantsList" class="btn btn-secondary">Back to the list</a> *@
+        </div>
+    </form>
+</div>
