@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RestaurantBookingSystem.Data\RestaurantBookingSystem.Data.csproj" />
+  </ItemGroup>
+
 </Project>
