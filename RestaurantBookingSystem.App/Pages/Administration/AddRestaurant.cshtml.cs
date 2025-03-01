@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RestaurantBookingSystem.Data;
 using RestaurantBookingSystem.Data.Models;
+using RestaurantBookingSystem.Repositories;
 
 namespace RestaurantBookingSystem.App.Pages.Administration
 {
@@ -10,17 +10,21 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         [BindProperty]
         public Restaurant NewRestaurant { get; set; }
 
-        private readonly RestaurantBookingSystemDbContext _context;
+        private readonly IRestaurantRepository _restaurantRepository;
 
-        public AddRestaurantModel(RestaurantBookingSystemDbContext context)
+        public AddRestaurantModel(IRestaurantRepository restaurantRepository)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _restaurantRepository = restaurantRepository ?? throw new ArgumentNullException(nameof(restaurantRepository));
         }
 
         public IActionResult OnPost()
         {
-            _context.Restaurants.Add(NewRestaurant);
-            _context.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            _restaurantRepository.AddRestaurant(NewRestaurant);
 
             return RedirectToPage("/Administration/AdminPage");
         }

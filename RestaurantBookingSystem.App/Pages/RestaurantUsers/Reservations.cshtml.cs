@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
 
-namespace RestaurantBookingSystem.App.Pages.Business
+namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
 {
     public class ReservationsModel : PageModel
     {

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RestaurantBookingSystem.Data\RestaurantBookingSystem.Data.csproj" />
+    <ProjectReference Include="..\RestaurantBookingSystem.Operations\RestaurantBookingSystem.Operations.csproj" />
   </ItemGroup>
 
 </Project>

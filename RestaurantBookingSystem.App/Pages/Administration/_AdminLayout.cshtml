@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,6 +26,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Administration/Index">Administration</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -32,6 +36,18 @@
     </header>
     <div class="container-fluid">
         <div class="row">
+            @if (IsSectionDefined("AdminSideBar"))
+            {
+                <div class="col-md-3 col-lg-2 p-0">
+                    @RenderSection("AdminSideBar", required: false)
+                </div>
+                <div class="col-md-9 col-lg-10 p-4">
+                    <main role="main" class="">
+                        @RenderBody()
+                    </main>
+                </div>
+            }
+
             <div class="col-md-12 col-lg-12 p-4">
                 <main role="main" class="">
                     @RenderBody()
