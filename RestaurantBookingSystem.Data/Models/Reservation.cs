@@ -16,9 +16,9 @@ namespace RestaurantBookingSystem.Data.Models
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        [ForeignKey(nameof(Employee))]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        [ForeignKey(nameof(RestaurantUser))]
+        public int RestaurantUserId { get; set; }
+        public RestaurantUser RestaurantUser { get; set; }
         public DateOnly ReservationDate { get; set; }
         public TimeOnly ReservationTime { get; set; }
         public int NumberOfPeople { get; set; }

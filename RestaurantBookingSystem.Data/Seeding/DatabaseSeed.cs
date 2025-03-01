@@ -11,12 +11,12 @@ namespace RestaurantBookingSystem.Data.Seeding
     public class DatabaseSeed
     {
         private readonly RestaurantBookingSystemDbContext _context;
-        private PasswordHasher<Employee> _hasher;
+        private PasswordHasher<RestaurantUser> _hasher;
 
         public DatabaseSeed(RestaurantBookingSystemDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _hasher = new PasswordHasher<Employee>();
+            _hasher = new PasswordHasher<RestaurantUser>();
         }
 
         public void SeedAdministrationData()
@@ -172,7 +172,7 @@ namespace RestaurantBookingSystem.Data.Seeding
                 _context.SaveChanges();
             }
 
-            var superAdminEmployee = new Employee
+            var superAdminEmployee = new RestaurantUser
             {
                 FirstName = "John",
                 LastName = "Doe",
@@ -184,9 +184,9 @@ namespace RestaurantBookingSystem.Data.Seeding
 
             superAdminEmployee.Password = _hasher.HashPassword(superAdminEmployee, "!superAdmin1234!");
 
-            if (!_context.Employees.Any(x => x.Username == "johndoe" && x.Role.Name == "Super Administrator"))
+            if (!_context.RestaurantUsers.Any(x => x.Username == "johndoe" && x.Role.Name == "Super Administrator"))
             {
-                _context.Employees.Add(superAdminEmployee);
+                _context.RestaurantUsers.Add(superAdminEmployee);
                 _context.SaveChanges();
             }
         }

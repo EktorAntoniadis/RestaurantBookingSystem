@@ -31,7 +31,7 @@ namespace RestaurantBookingSystem.Data.Models
         [Required]
         public required string PostalCode { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<RestaurantUser> RestaurantUsers { get; set; }
         public ICollection<Customer> Customers { get; set; }
     }
 }
