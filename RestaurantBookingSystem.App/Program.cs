@@ -21,6 +21,7 @@ namespace RestaurantBookingSystem.App
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
 

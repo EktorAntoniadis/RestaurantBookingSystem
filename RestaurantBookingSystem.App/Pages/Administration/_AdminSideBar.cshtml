@@ -1,0 +1,27 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<nav id="admin-sidebar" class="sidebar d-flex flex-column p-3 bg-body-tertiary border-end bg-light collapse" style="100vh;">
+    <div class="position-sticky pt-3">
+        <h4>Admin Panel</h4>
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+                <a asp-page="/Administration/Index" asp-route-view="_Dashboard" class="nav-link text-dark link-body-emphasis">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/Administration/Index" asp-route-view="_Restaurants" class="nav-link text-dark link-body-emphasis">Restaurants</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark link-body-emphasis">Clients</a></li>
+            <li class="nav-item">
+                <a asp-page="/Administration/Index" asp-route-view="_RolesPermissions" class="nav-link text-dark link-body-emphasis">Roles & Permissions</a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">STATISTICS</h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Popularity</a></li>
+            <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Current Month</a></li>
+            <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Last quarter</a></li>
+            <li class="nav-item"> <a class="nav-link text-dark link-body-emphasis">Revenue</a></li>
+        </ul>
+    </div>
+</nav>

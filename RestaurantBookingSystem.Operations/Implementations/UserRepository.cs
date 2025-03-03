@@ -59,7 +59,8 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
         public IEnumerable<Role> GetRoles()
         {
-            return _context.Roles.ToList();
+            return _context.Roles
+                .Include(x=>x.Permissions).ToList();
         }
 
         public void UpdateRole(Role role)

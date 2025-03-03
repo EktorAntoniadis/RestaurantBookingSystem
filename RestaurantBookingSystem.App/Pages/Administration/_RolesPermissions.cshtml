@@ -1,0 +1,39 @@
+﻿@model RestaurantBookingSystem.App.Pages.Administration.AdminPageModel
+
+<h2>Roles</h2>
+
+<a class="btn btn-info" asp-page="/Administration/AddRole">Add new Role</a>
+
+<table class="table table-light table-responsive">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th class="w-10">Number of permissions</th>
+            <th>Permissions</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model.Roles)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+                <td class="w-25">@role.Description</td>
+                <td class="w-10">@role.Permissions.Count</td>
+                <td class="w-25">@string.Join(", ", role.Permissions.Select(x => x.Name).ToList())</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-warning" asp-page="/EditRole">Edit</a>
+                        <form method="post" asp-page-handler="DeleteRole">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
