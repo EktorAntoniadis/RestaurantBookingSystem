@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Data.Seeding;
+using RestaurantBookingSystem.Repositories;
+using RestaurantBookingSystem.Repositories.Implementations;
 
 namespace RestaurantBookingSystem.App
 {
@@ -16,6 +18,9 @@ namespace RestaurantBookingSystem.App
             builder.Services.AddDbContext<RestaurantBookingSystemDbContext>(options =>
                 options.UseMySql("server=127.0.0.1;uid=root;database=restaurantbookingdb",
                 ServerVersion.AutoDetect("server=127.0.0.1;uid=root;database=restaurantbookingdb")));
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 
             var app = builder.Build();
 
