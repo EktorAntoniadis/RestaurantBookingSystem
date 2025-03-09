@@ -7,28 +7,32 @@ using RestaurantBookingSystem.Repositories;
 
 namespace RestaurantBookingSystem.App.Pages.Administration
 {
-    public class AddRoleModel : PageModel
+    //[Authorize(Roles = "Administrator")]
+    public class EditRoleModel : PageModel
     {
         private readonly IUserRepository _userRepository;
 
-        public AddRoleModel(IUserRepository userRepository)
+        public EditRoleModel(IUserRepository userRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         [BindProperty]
-        public Role NewRole { get; set; }
+        public Role EditRole { get; set; }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id)
         {
-            NewRole = new Role() { Name="", Description= "" };
+            EditRole = _userRepository.GetRoleById(id);
             return Page();
         }
 
-        public IActionResult OnPostAddNewRole()
+        public IActionResult OnPostEditRole()
         {
-           
-            _userRepository.AddRole(NewRole);
+            if (!string.IsNullOrWhiteSpace(EditRole.Name))
+            {
+                _userRepository.UpdateRole(EditRole);
+            }
+
             return RedirectToPage("/Administration/Index");
         }
     }

@@ -26,7 +26,7 @@
                 <td class="w-25">@string.Join(", ", role.Permissions.Select(x => x.Name).ToList())</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a class="btn btn-warning" asp-page="/EditRole">Edit</a>
+                        <a class="btn btn-warning" asp-page="/Administration/EditRole" asp-route-id="@role.Id">Edit</a>
                         <form method="post" asp-page-handler="DeleteRole">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
