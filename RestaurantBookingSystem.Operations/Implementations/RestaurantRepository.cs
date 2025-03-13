@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantBookingSystem;
 using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Pagination;
-using System.Collections.Generic;
-using System.Linq;
+using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 
 namespace RestaurantBookingSystem.Repositories.Implementations
 {

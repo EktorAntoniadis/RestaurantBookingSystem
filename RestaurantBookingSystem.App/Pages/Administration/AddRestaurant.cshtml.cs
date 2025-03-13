@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
+using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
 
 namespace RestaurantBookingSystem.App.Pages.Administration

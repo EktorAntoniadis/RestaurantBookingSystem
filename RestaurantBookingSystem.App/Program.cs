@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Data.Seeding;
-using RestaurantBookingSystem.Repositories;
+using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories.Implementations;
 
 namespace RestaurantBookingSystem.App

@@ -1,35 +1,36 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
-using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
 
 namespace RestaurantBookingSystem.App.Pages.Administration
 {
-    public class AddRoleModel : PageModel
+    public class DeleteRoleModel : PageModel
     {
         private readonly IUserRepository _userRepository;
 
-        public AddRoleModel(IUserRepository userRepository)
+        public DeleteRoleModel(IUserRepository userRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         [BindProperty]
-        public Role NewRole { get; set; }
+        public Role DeleteRole { get; set; }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id)
         {
-            NewRole = new Role() { Name="", Description= "" };
+            DeleteRole = _userRepository.GetRoleById(id);
+            if (DeleteRole == null)
+            {
+                return NotFound();
+            }
             return Page();
         }
 
-        public IActionResult OnPostAddNewRole()
+        public IActionResult OnPost()
         {
-           
-            _userRepository.AddRole(NewRole);
+            _userRepository.DeleteRole(DeleteRole.Id);
             return RedirectToPage("/Administration/Index");
         }
     }

@@ -27,11 +27,40 @@
                 <td>
                     <div class="btn-group" role="group">
                         <a class="btn btn-warning" asp-page="/Administration/EditRole" asp-route-id="@role.Id">Edit</a>
-                        <form method="post" asp-page-handler="DeleteRole">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        <a class="btn btn-danger" asp-page="/Administration/DeleteRole" asp-route-id="@role.Id">Delete</a>                      
                     </div>
 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Permissions</h2>
+
+<a class="btn btn-info mt-3 mb-3" asp-page="/Administration/AddPermission">Add new Permission</a>
+
+<table class="table table-light table-responsive">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>   
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var permission in Model.Permissions)
+        {
+            <tr>
+                <td>@permission.Id</td>
+                <td>@permission.Name</td>
+                <td class="w-25">@permission.Description</td>               
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-warning" asp-page="/Administration/EditPermission" asp-route-id="@permission.Id">Edit</a>
+                        <a class="btn btn-danger" asp-page="/Administration/DeletePermission" asp-route-id="@permission.Id">Delete</a>
+                    </div>
                 </td>
             </tr>
         }

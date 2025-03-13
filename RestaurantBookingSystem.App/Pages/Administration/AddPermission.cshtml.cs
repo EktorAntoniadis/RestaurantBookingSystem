@@ -1,35 +1,33 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
-using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
 
 namespace RestaurantBookingSystem.App.Pages.Administration
 {
-    public class AddRoleModel : PageModel
+    public class AddPermissionModel : PageModel
     {
         private readonly IUserRepository _userRepository;
 
-        public AddRoleModel(IUserRepository userRepository)
+        public AddPermissionModel(IUserRepository userRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         [BindProperty]
-        public Role NewRole { get; set; }
+        public Permission NewPermission { get; set; }
 
         public IActionResult OnGet()
         {
-            NewRole = new Role() { Name="", Description= "" };
+            NewPermission = new Permission() { Name = "", Description = "" };
             return Page();
         }
 
-        public IActionResult OnPostAddNewRole()
+        public IActionResult OnPostAddNewPermission()
         {
-           
-            _userRepository.AddRole(NewRole);
+
+            _userRepository.AddPermission(NewPermission);
             return RedirectToPage("/Administration/Index");
         }
     }

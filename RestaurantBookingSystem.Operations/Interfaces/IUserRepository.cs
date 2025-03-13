@@ -1,7 +1,7 @@
 ﻿using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Pagination;
 
-namespace RestaurantBookingSystem.Repositories
+namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
 {
     public interface IUserRepository
     {

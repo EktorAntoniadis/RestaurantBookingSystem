@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
-using RestaurantBookingSystem.Repositories;
+using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 
 namespace RestaurantBookingSystem.App.Pages.Administration
 {
@@ -16,6 +16,8 @@ namespace RestaurantBookingSystem.App.Pages.Administration
 
         public IEnumerable<Role> Roles { get; set; }
 
+        public IEnumerable<Permission> Permissions { get; set; }
+
         public IActionResult OnGet(string view)
         {
             ViewName = string.IsNullOrEmpty(view) ? "_Dashboard" : view;
@@ -23,6 +25,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration
             if(view == "_RolesPermissions")
             {
                 Roles = _userRepository.GetRoles();
+                Permissions = _userRepository.GetPermissions();
             }
 
             return Page();
