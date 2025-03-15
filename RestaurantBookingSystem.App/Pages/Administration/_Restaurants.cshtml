@@ -1,11 +1,55 @@
 ﻿@model RestaurantBookingSystem.App.Pages.Administration.AdminPageModel
 
 <div class="container">
-    <h1>This is the Restaurants page</h1>
-    <p>Welcome to the restaurants page.</p>
+   <h2>Registered Restaurants</h2>
 </div>
 
-<a class="btn btn-outline-info" asp-page="/Administration/AddRestaurant">Add a new restaurant</a>
+<a class="btn btn-outline-info mt-3 mb-3" asp-page="/Administration/AddRestaurant">Add a new restaurant</a>
 
 
+<table class="table table-light table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Menu</th>
+            <th>Αddress</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>BusinessRegNo</th>
+            <th>PostalCode</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var restaurant in Model.Restaurants.Records){
+            <tr>
+                <td>@restaurant.Name</td>
+                <td>@restaurant.Menu?.Name</td>
+                <td>@restaurant.Address</td>
+                <td>@restaurant.City</td>
+                <td>@restaurant.Country</td>
+                <td>@restaurant.BusinessRegistrationNumber</td>
+                <td>@restaurant.PostalCode</td>
+                <th>
+                   <div class="btn-group">
+                        <a class="btn btn-info" asp-page="AddMenu" asp-route-id="@restaurant.Id">Add Menu</a>
+                        <a class="btn btn-warning" asp-page="EditRestaurant" asp-route-id="@restaurant.Id">Edit</a>
+                        <a class="btn btn-danger" asp-page="DeleteRestaurant" asp-route-id="@restaurant.Id">Delete</a>
+                   </div>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="pagination">
+    @if(Model.Restaurants.HasPreviousPage){
+        <a asp-page="/Administration/Index" asp-route-view="_Restaurants" asp-route-PageIndex="@(Model.Restaurants.PageIndex - 1)" class=" btn btn-secondary">Previous</a>
+    }
+
+    @if(Model.Restaurants.HasNextPage){
+        <a asp-page="/Administration/Index" asp-route-view="_Restaurants" asp-route-PageIndex="@(Model.Restaurants.PageIndex + 1)" class="btn btn-secondary">Next</a>
+    }
+</div>
 

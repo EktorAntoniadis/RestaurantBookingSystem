@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
-using RestaurantBookingSystem.Repositories.Implementations;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace RestaurantBookingSystem.App.Pages.Administration
 {
@@ -70,7 +68,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration
 
             if (view == "_Restaurants")
             {
-                var restaurants = _restaurantRepository.GetRestaurants(
+                Restaurants = _restaurantRepository.GetRestaurants(
                     PageIndex,
                     10,
                     Name,

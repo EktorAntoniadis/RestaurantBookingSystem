@@ -19,15 +19,10 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         }
 
         public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
+        {           
             _restaurantRepository.AddRestaurant(NewRestaurant);
 
-            return RedirectToPage("/Administration/AdminPage");
+            return RedirectToPage("/Administration/Index", new { view = "_Restaurants" } );
         }
     }
 }
