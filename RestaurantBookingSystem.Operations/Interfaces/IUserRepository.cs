@@ -13,7 +13,7 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
         void AddRole(Role role);
         Role? GetRoleById(int id);
         IEnumerable<Role> GetRoles();
-        void UpdateRole(Role role);
+        void UpdateRole(Role role, List<int> selectedPermissionIds);
         void DeleteRole(int id);
         void AddRestaurantUser(RestaurantUser user);
         RestaurantUser? GetRestaurantUserById(int id);

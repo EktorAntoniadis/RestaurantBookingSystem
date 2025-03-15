@@ -21,20 +21,24 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         [BindProperty]
         public Role EditRole { get; set; }
 
+        [BindProperty]
+        public List<int> SelectedPermissionIds { get; set; }
+
+        public IEnumerable<Permission> Permissions { get; set; }
+
         public IActionResult OnGet(int id)
         {
             EditRole = _userRepository.GetRoleById(id);
+            Permissions = _userRepository.GetPermissions();
+            SelectedPermissionIds = EditRole.Permissions.Select(x => x.Id).ToList();
             return Page();
         }
 
         public IActionResult OnPostEditRole()
         {
-            if (!string.IsNullOrWhiteSpace(EditRole.Name))
-            {
-                _userRepository.UpdateRole(EditRole);
-            }
+            _userRepository.UpdateRole(EditRole, SelectedPermissionIds);
 
-            return RedirectToPage("/Administration/Index");
+            return RedirectToPage("/Administration/Index", new { view ="_RolesPermissions" });
         }
     }
 }

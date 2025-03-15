@@ -20,17 +20,24 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         [BindProperty]
         public Role NewRole { get; set; }
 
+        [BindProperty]
+        public List<int> SelectedPermissionIds { get; set; }
+
+        public IEnumerable<Permission> Permissions { get; set; }
+
         public IActionResult OnGet()
         {
-            NewRole = new Role() { Name="", Description= "" };
+            NewRole = new Role() { Name = "", Description = "" };
+            Permissions = _userRepository.GetPermissions();
             return Page();
         }
 
         public IActionResult OnPostAddNewRole()
         {
-           
+            Permissions = _userRepository.GetPermissions();
+            NewRole.Permissions = Permissions.Where(x => SelectedPermissionIds.Contains(x.Id)).ToList();
             _userRepository.AddRole(NewRole);
-            return RedirectToPage("/Administration/Index");
+            return RedirectToPage("/Administration/Index", new { view = "_RolesPermissions" });
         }
     }
 }

@@ -25,7 +25,16 @@
                 <label asp-for="EditRole.Description">Description</label>
                 <textarea class="form-control" asp-for="EditRole.Description"></textarea>
             </div>
-
+            <di class="form-group mt-3">
+                <label asp-for="EditRole.Permissions">Permissions</label>
+               @foreach(var permission in Model.Permissions){
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="@permission.Id" name="SelectedPermissionIds"
+                        checked="@(Model.SelectedPermissionIds.Contains(permission.Id))"/>
+                        <label class="form-check-label" for="SelectedPermissionIds">@permission.Name</label>
+                    </div>
+               }
+            </di>
             <button type="submit" class="btn btn-primary mt-3">Edit Role</button>
         </div>
     </form>

@@ -2,6 +2,7 @@
 using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
+using System.Security;
 
 namespace RestaurantBookingSystem.Repositories.Implementations
 {
@@ -52,18 +53,30 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
         public Role? GetRoleById(int id)
         {
-            return _context.Roles.Find(id);
+            return _context.Roles
+                .Include(x=>x.Permissions)
+                .FirstOrDefault(x=>x.Id == id);
         }
 
         public IEnumerable<Role> GetRoles()
         {
             return _context.Roles
-                .Include(x=>x.Permissions).ToList();
+                .Include(x => x.Permissions).ToList();
         }
 
-        public void UpdateRole(Role role)
+        public void UpdateRole(Role role, List<int> selectedPermissionIds)
         {
-            _context.Roles.Update(role);
+            var currentRole = GetRoleById(role.Id);
+
+            currentRole.Permissions.Clear();
+            _context.Roles.Update(currentRole);
+            _context.SaveChanges();
+
+            currentRole.Name = role.Name;
+            currentRole.Description = role.Description;
+            var permissions = _context.Permissions.Where(x => selectedPermissionIds.Contains(x.Id)).ToList();
+            currentRole.Permissions = permissions;
+            _context.Roles.Update(currentRole);
             _context.SaveChanges();
         }
 

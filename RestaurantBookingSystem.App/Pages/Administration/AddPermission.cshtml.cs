@@ -28,7 +28,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         {
 
             _userRepository.AddPermission(NewPermission);
-            return RedirectToPage("/Administration/Index");
+            return RedirectToPage("/Administration/Index", new { view = "_RolesPermissions" });
         }
     }
 }

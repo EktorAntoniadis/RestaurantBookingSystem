@@ -32,7 +32,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration
                 _userRepository.UpdatePermission(EditPermission);
             }
 
-            return RedirectToPage("/Administration/Index");
+            return RedirectToPage("/Administration/Index", new { view = "_RolesPermissions" });
         }
     }
 }

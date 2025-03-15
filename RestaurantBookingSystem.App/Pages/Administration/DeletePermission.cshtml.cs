@@ -31,7 +31,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         public IActionResult OnPost()
         {
             _userRepository.DeletePermission(DeletePermission.Id);
-            return RedirectToPage("/Administration/Index");
+            return RedirectToPage("/Administration/Index", new { view = "_RolesPermissions" });
         }
     }
 }
