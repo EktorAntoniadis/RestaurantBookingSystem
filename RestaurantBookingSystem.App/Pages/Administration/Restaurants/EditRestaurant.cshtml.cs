@@ -5,41 +5,35 @@ using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
 using RestaurantBookingSystem.Repositories.Implementations;
 
-namespace RestaurantBookingSystem.Pages.Restaurants
+namespace RestaurantBookingSystem.App.Pages.Administration.Restaurants
 {
-    public class DeleteRestaurantModel : PageModel
+    public class EditRestaurantModel : PageModel
     {
         private readonly IRestaurantRepository _repository;
 
         [BindProperty]
-        public Restaurant DeleteRestaurant { get; set; }
+        public Restaurant EditRestaurant { get; set; }
 
-        public DeleteRestaurantModel(IRestaurantRepository repository)
+        public EditRestaurantModel(IRestaurantRepository repository)
         {
             _repository = repository;
         }
 
         public IActionResult OnGet(int id)
         {
-            DeleteRestaurant = _repository.GetRestaurantById(id);
-
-            if (DeleteRestaurant == null)
+            EditRestaurant = _repository.GetRestaurantById(id);
+            if (EditRestaurant == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
-        public IActionResult OnPost(int id)
+        public IActionResult OnPost()
         {
-            DeleteRestaurant = _repository.GetRestaurantById(id);
 
-            if (DeleteRestaurant == null)
-            {
-                return NotFound();
-            }
-
-            _repository.DeleteRestaurant(DeleteRestaurant.Id);
+            _repository.UpdateRestaurant(EditRestaurant);
             return RedirectToPage("/Administration/Index", new { view = "_Restaurants" });
         }
     }

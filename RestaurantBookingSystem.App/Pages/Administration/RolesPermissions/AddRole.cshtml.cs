@@ -6,7 +6,7 @@ using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
 
-namespace RestaurantBookingSystem.App.Pages.Administration
+namespace RestaurantBookingSystem.App.Pages.Administration.RolesPermissions
 {
     public class AddRoleModel : PageModel
     {

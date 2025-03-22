@@ -3,34 +3,35 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
-using System.Data;
 
-namespace RestaurantBookingSystem.App.Pages.Administration
+namespace RestaurantBookingSystem.App.Pages.Administration.RolesPermissions
 {
-    public class DeletePermissionModel : PageModel
+    //[Authorize(Permissions = "Administrator")]
+    public class EditPermissionModel : PageModel
     {
         private readonly IUserRepository _userRepository;
 
-        public DeletePermissionModel(IUserRepository userRepository)
+        public EditPermissionModel(IUserRepository userRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
+
         [BindProperty]
-        public Permission DeletePermission { get; set; }
+        public Permission EditPermission { get; set; }
 
         public IActionResult OnGet(int id)
         {
-            DeletePermission = _userRepository.GetPermissionById(id);
-            if (DeletePermission == null)
-            {
-                return NotFound();
-            }
+            EditPermission = _userRepository.GetPermissionById(id);
             return Page();
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPostEditPermission()
         {
-            _userRepository.DeletePermission(DeletePermission.Id);
+            if (!string.IsNullOrWhiteSpace(EditPermission.Name))
+            {
+                _userRepository.UpdatePermission(EditPermission);
+            }
+
             return RedirectToPage("/Administration/Index", new { view = "_RolesPermissions" });
         }
     }

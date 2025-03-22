@@ -4,7 +4,7 @@ using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
 
-namespace RestaurantBookingSystem.App.Pages.Administration
+namespace RestaurantBookingSystem.App.Pages.Administration.Restaurants
 {
     public class AddRestaurantModel : PageModel
     {
@@ -19,10 +19,10 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         }
 
         public IActionResult OnPost()
-        {           
+        {
             _restaurantRepository.AddRestaurant(NewRestaurant);
 
-            return RedirectToPage("/Administration/Index", new { view = "_Restaurants" } );
+            return RedirectToPage("/Administration/Index", new { view = "_Restaurants" });
         }
     }
 }

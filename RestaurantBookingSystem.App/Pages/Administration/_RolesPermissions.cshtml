@@ -2,7 +2,7 @@
 
 <h2>Roles</h2>
 
-<a class="btn btn-info mt-3 mb-3" asp-page="/Administration/AddRole">Add new Role</a>
+<a class="btn btn-info mt-3 mb-3" asp-page="/Administration/RolesPermissions/AddRole">Add new Role</a>
 
 <table class="table table-light table-responsive">
     <thead>
@@ -26,8 +26,8 @@
                 <td class="w-25">@string.Join(", ", role.Permissions.Select(x => x.Name).ToList())</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a class="btn btn-warning" asp-page="/Administration/EditRole" asp-route-id="@role.Id">Edit</a>
-                        <a class="btn btn-danger" asp-page="/Administration/DeleteRole" asp-route-id="@role.Id">Delete</a>                      
+                        <a class="btn btn-warning" asp-page="/Administration/RolesPermissions/EditRole" asp-route-id="@role.Id">Edit</a>
+                        <a class="btn btn-danger" asp-page="/Administration/RolesPermissions/DeleteRole" asp-route-id="@role.Id">Delete</a>
                     </div>
 
                 </td>

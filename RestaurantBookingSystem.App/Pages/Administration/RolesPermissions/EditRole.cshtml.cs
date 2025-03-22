@@ -6,7 +6,7 @@ using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories;
 
-namespace RestaurantBookingSystem.App.Pages.Administration
+namespace RestaurantBookingSystem.App.Pages.Administration.RolesPermissions
 {
     //[Authorize(Roles = "Administrator")]
     public class EditRoleModel : PageModel
@@ -38,7 +38,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration
         {
             _userRepository.UpdateRole(EditRole, SelectedPermissionIds);
 
-            return RedirectToPage("/Administration/Index", new { view ="_RolesPermissions" });
+            return RedirectToPage("/Administration/Index", new { view = "_RolesPermissions" });
         }
     }
 }
