@@ -29,6 +29,9 @@ namespace RestaurantBookingSystem.Data.Models
         public required string BusinessRegistrationNumber { get; set; }
 
         [Required]
+        public required string Phone { get; set; }
+
+        [Required]
         public required string PostalCode { get; set; }
 
         public ICollection<RestaurantUser> RestaurantUsers { get; set; }
