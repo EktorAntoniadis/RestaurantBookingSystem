@@ -22,7 +22,12 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
         public Restaurant? GetRestaurantById(int id)
         {
-            return _context.Restaurants.Find(id);
+            return _context.Restaurants
+                .Include(x=>x.Menu)
+                .ThenInclude(x=>x.FoodCategories)
+                .ThenInclude(x=>x.FoodItems)
+                .Include(x=>x.RestaurantUsers)
+                .FirstOrDefault(x=>x.Id ==id);
         }
 
         public void UpdateRestaurant(Restaurant restaurant)
