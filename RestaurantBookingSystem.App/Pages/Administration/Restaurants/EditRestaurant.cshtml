@@ -2,6 +2,11 @@
 @model EditRestaurantModel
 @{
     ViewData["Title"] = "Edit Restaurant";
+    Layout = "_AdminLayout";
+}
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
 }
 
 <h2>Edit Restaurant</h2>

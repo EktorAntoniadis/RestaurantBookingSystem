@@ -1,0 +1,95 @@
+﻿@page "{id:int}"
+@model RestaurantBookingSystem.App.Pages.Administration.Restaurants.ViewRestaurantModel
+@{
+    Layout = "_AdminLayout";
+}
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
+}
+
+<div class="card w-auto p-3">
+    <div class="card-header card-title text-center">
+        <h2>@Model.ViewRestaurant.Name</h2>
+        <p>@Model.ViewRestaurant.Description</p>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-2"><p>Address:</p></div>
+            <div class="col-10"> <p>@Model.ViewRestaurant.Address</p></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><p>City:</p></div>
+            <div class="col-10"><p>@Model.ViewRestaurant.City</p></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><p>Country</p></div>
+            <div class="col-10"><p>@Model.ViewRestaurant.Country</p></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><p>Business Registration Number:</p></div>
+            <div class="col-10"> <p>@Model.ViewRestaurant.BusinessRegistrationNumber</p></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><p>Postal Code: </p></div>
+            <div class="col-10"> <p>@Model.ViewRestaurant.PostalCode</p></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><p>Phone: </p></div>
+            <div class="col-10"><p>@Model.ViewRestaurant.Phone</p></div>
+        </div>
+    </div>
+</div>
+
+@if(Model.ViewRestaurant.Menu != null)
+{
+    <div class="p-4">
+
+        <div class="card w-auto">
+            <div class="text-center">
+                <h3 class="card-title card-header">@Model.ViewRestaurant.Menu.Name</h3>
+                <p class="card-text pt-3">@Model.ViewRestaurant.Menu.Description</p>
+            </div>
+            @foreach(var foodCategory in Model.ViewRestaurant.Menu.FoodCategories)
+            {
+                <div class="row p-3">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <h5 class="form-label">@foodCategory.Name</h5>
+                        </div>
+                        <div class="form-group">
+                            <p class="form-text">@foodCategory.Description</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <ul class="list-group list-group-flush">
+                                @foreach(var foodItem in foodCategory.FoodItems)
+                                {
+                                    <li class="list-group-item">
+                                        <h6> @foodItem.Name: </h6>
+                                        <p>@foodItem.Description</p>
+                                    </li>
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+       <div class="card-footer">
+            <a asp-page="/Administration/Index" class="btn btn-outline-dark" asp-route-view="_Restaurants">Back</a>
+            <a asp-page="/Administration/Restaurants/EditMenu" class="btn btn-outline-primary" asp-route-id="@Model.ViewRestaurant.Id"> Edit Menu</a>
+            <a asp-page="/Administration/Restaurants/DeleteMenu" class="btn btn-outline-danger" asp-route-id="@Model.ViewRestaurant.Id"> Delete Menu</a>
+
+       </div>
+
+    </div>
+}
+else
+{
+    <a class="btn btn-info mt-3" asp-page="/Administration/Restaurants/AddMenu" asp-route-id="@Model.ViewRestaurant.Id">Add Menu</a>
+
+}

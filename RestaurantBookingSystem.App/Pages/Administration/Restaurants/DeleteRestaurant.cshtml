@@ -2,6 +2,11 @@
 @model DeleteRestaurantModel
 @{
     ViewData["Title"] = "Delete Restaurant";
+    Layout = "_AdminLayout";
+}
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
 }
 
 <h2>Are you sure you want to delete this restaurant?</h2>

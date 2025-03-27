@@ -83,6 +83,11 @@ namespace RestaurantBookingSystem.App.Pages.Administration
                 );
             }
 
+            if(view == "_Clients")
+            {
+
+            }
+
             return Page();
         }
     }

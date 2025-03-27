@@ -6,8 +6,9 @@
 
 <a class="btn btn-outline-info mt-3 mb-3" asp-page="/Administration/Restaurants/AddRestaurant">Add a new restaurant</a>
 
-<form method="get" class="mb-4" >
-    <div class="row">
+<form method="get" class="mb-4">
+    <input type="hidden" name="view" value="_Restaurants" />
+    <div class="row pb-3">
         <div class="col-3">
             <input type="text" name="Name" value="@Model.Name" class="form-control" placeholder="Search by name" />
         </div>
@@ -20,9 +21,9 @@
         <div class="col-3">
             <input type="text" name="City" value="@Model.City" class="form-control" placeholder="Search by city" />
         </div>
-       
+
     </div>
-    <div class="row">
+    <div class="row pb-3">
         <div class="col-3">
             <input type="text" name="Country" value="@Model.Country" class="form-control" placeholder="Search by country" />
         </div>
@@ -33,56 +34,78 @@
             <input type="text" name="PostalCode" value="@Model.PostalCode" class="form-control" placeholder="Search by postalCode" />
         </div>
         <div class="col-3">
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a href="/Administration/Restaurants" class="btn btn-secondary">Reset</a>
+            <button asp-route-view="_Restaurants" type="submit" class="btn btn-primary">Search</button>
+            <a asp-page="/Administration/Index" asp-route-view="_Restaurants" class="btn btn-secondary">Reset</a>
         </div>
     </div>
 </form>
 
-<table class="table table-light table-responsive">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Menu</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Country</th>
-            <th>BusinessRegNo</th>
-            <th>PostalCode</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var restaurant in Model.Restaurants.Records)
-        {
+@if (Model.Restaurants == null || Model.Restaurants.TotalCount == 0)
+{
+    <div>
+        <h3>There are no records. Please add a restaurant</h3>
+
+    </div>
+}
+else
+{
+
+    <table class="table table-light table-responsive">
+        <thead>
             <tr>
-                <td>@restaurant.Name</td>
-                <td>@restaurant.Menu?.Name</td>
-                <td>@restaurant.Address</td>
-                <td>@restaurant.City</td>
-                <td>@restaurant.Country</td>
-                <td>@restaurant.BusinessRegistrationNumber</td>
-                <td>@restaurant.PostalCode</td>
-                <td>
-                    <div class="btn-group">
-                        <a class="btn btn-info" asp-page="AddMenu" asp-route-id="@restaurant.Id">Add Menu</a>
-                        <a class="btn btn-warning" asp-page="/Administration/Restaurants/EditRestaurant" asp-route-id="@restaurant.Id">Edit</a>
-                        <a class="btn btn-danger" asp-page="/Administration/Restaurants/DeleteRestaurant" asp-route-id="@restaurant.Id">Delete</a>
-                    </div>
-                </td>
+                <th>Name</th>
+                <th>Menu</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>BusinessRegNo</th>
+                <th>PostalCode</th>
+                <th>Actions</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var restaurant in Model.Restaurants.Records)
+            {
+                <tr>
+                    <td>@restaurant.Name</td>
+                    <td>@restaurant.Menu?.Name</td>
+                    <td>@restaurant.Address</td>
+                    <td>@restaurant.City</td>
+                    <td>@restaurant.Country</td>
+                    <td>@restaurant.BusinessRegistrationNumber</td>
+                    <td>@restaurant.PostalCode</td>
+                    <td>
+                        <div class="btn-group">
+                            @if (restaurant.Menu == null)
+                            {
+                                <a class="btn btn-info" asp-page="/Administration/Restaurants/AddMenu" asp-route-id="@restaurant.Id">Add Menu</a>
+
+                            }
+                            else
+                            {
+                                <a class="btn btn-success" asp-page="/Administration/Restaurants/EditMenu" asp-route-id="@restaurant.Id">Edit Menu</a>
+
+                            }
+                            <a class="btn btn-primary" asp-page="/Administration/Restaurants/ViewRestaurant" asp-route-id="@restaurant.Id">View</a>
+                            <a class="btn btn-warning" asp-page="/Administration/Restaurants/EditRestaurant" asp-route-id="@restaurant.Id">Edit</a>
+                            <a class="btn btn-danger" asp-page="/Administration/Restaurants/DeleteRestaurant" asp-route-id="@restaurant.Id">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        @if (Model.Restaurants.HasPreviousPage)
+        {
+            <a asp-page="/Administration/Index" asp-route-view="_Restaurants" asp-route-PageIndex="@(Model.Restaurants.PageIndex - 1)" class="btn btn-secondary">Previous</a>
         }
-    </tbody>
-</table>
 
-<div class="pagination">
-    @if (Model.Restaurants.HasPreviousPage)
-    {
-        <a asp-page="/Administration/Index" asp-route-view="_Restaurants" asp-route-PageIndex="@(Model.Restaurants.PageIndex - 1)" class="btn btn-secondary">Previous</a>
-    }
+        @if (Model.Restaurants.HasNextPage)
+        {
+            <a asp-page="/Administration/Index" asp-route-view="_Restaurants" asp-route-PageIndex="@(Model.Restaurants.PageIndex + 1)" class="btn btn-secondary">Next</a>
+        }
+    </div>
+}
 
-    @if (Model.Restaurants.HasNextPage)
-    {
-        <a asp-page="/Administration/Index" asp-route-view="_Restaurants" asp-route-PageIndex="@(Model.Restaurants.PageIndex + 1)" class="btn btn-secondary">Next</a>
-    }
-</div>
