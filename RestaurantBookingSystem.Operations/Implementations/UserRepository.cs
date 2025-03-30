@@ -179,9 +179,9 @@ namespace RestaurantBookingSystem.Repositories.Implementations
                 query = query.Where(x => x.JoinDate.Date == joinDate.Value.Date);
             }
 
-            if (endDate != null)
+            if (endDate.HasValue)
             {
-                query = query.Where(x => x.EndDate.Date == endDate.Value.Date);
+                query = query.Where(x => x.EndDate!.Value == endDate.Value.Date);
             }
 
             switch (sortColumn)

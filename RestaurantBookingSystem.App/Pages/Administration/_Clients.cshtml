@@ -4,16 +4,42 @@
     <h2>Registered Restaurant Owners</h2>
 </div>
 
-@* 
-<div class="pagination">
-    @if (Model.Clients.HasPreviousPage)
-    {
-        <a asp-page="/Administration/Index" asp-route-view="_Clients" asp-route-PageIndex="@(Model.Clients.PageIndex - 1)" class="btn btn-secondary">Previous</a>
-    }
+<a class="btn btn-outline-info mt-3 mb-3" asp-page="/Administration/Clients/AddClient">Add a new restaurant owner</a>
 
-    @if (Model.Clients.HasNextPage)
-    {
-        <a asp-page="/Administration/Index" asp-route-view="_Clients" asp-route-PageIndex="@(Model.Clients.PageIndex + 1)" class="btn btn-secondary">Next</a>
-    }
-</div>
- *@
+@if (Model.RestaurantOwners.TotalCount > 0)
+{
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Join Date</th>
+                <th>Εnd Date</th>
+                <th>Restaurant Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var owner in Model.RestaurantOwners.Records)
+            {
+                <tr>
+                    <td>@owner.FirstName</td>
+                    <td>@owner.LastName</td>
+                    <td>@owner.Username</td>
+                    <td>@owner.JoinDate.ToString("dd/MM/yyyy")</td>
+                    <td>@(@owner.EndDate.HasValue ? @owner.EndDate!.Value.ToString("dd/MM/yyyy") : string.Empty)</td>
+                    <td>@owner.Restaurant?.Name</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-page="/Administration/Clients/EditClient" asp-route-id="@owner.Id">Edit</a>
+                        <a class="btn btn-sm btn-danger" asp-page="/Administration/Clients/DeleteClient" asp-route-id="@owner.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4>Add owners associated with restaurants</h4>
+}

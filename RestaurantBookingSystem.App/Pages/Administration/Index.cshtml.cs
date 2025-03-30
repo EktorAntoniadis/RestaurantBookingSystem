@@ -26,6 +26,24 @@ namespace RestaurantBookingSystem.App.Pages.Administration
 
         public PaginatedList<Restaurant> Restaurants { get; set; }
 
+        public PaginatedList<RestaurantUser> RestaurantOwners { get; set; }
+
+        [FromQuery]
+        public string? FirstName { get; set; }
+
+
+        [FromQuery]
+        public string? LastName { get; set; }
+
+        [FromQuery]
+        public string? Username { get; set; }
+
+        [FromQuery]
+        public DateTime? JoinDate { get; set; }
+
+        [FromQuery]
+        public DateTime? EndDate { get; set; }
+
         [FromQuery]
         public string? Name { get; set; }
 
@@ -85,7 +103,16 @@ namespace RestaurantBookingSystem.App.Pages.Administration
 
             if(view == "_Clients")
             {
-
+                RestaurantOwners = _userRepository.GetRestaurantOwners(
+                    PageIndex,
+                    10,
+                    FirstName,
+                    LastName,
+                    Username,
+                    JoinDate,
+                    EndDate,
+                    SortColumn,
+                    SortDirection);
             }
 
             return Page();
