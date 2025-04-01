@@ -1,5 +1,19 @@
 ﻿@page "{id:int}"
 @model RestaurantBookingSystem.App.Pages.Administration.Restaurants.DeleteMenuModel
 @{
+    ViewData["Title"] = "Delete Menu";
     Layout = "_AdminLayout";
 }
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
+}
+
+<h2>Are you sure you want to delete this menu?</h2>
+<h3>@Model.Restaurant.Menu.Name, @Model.Restaurant.Menu.Description</h3>
+
+<form method="post">
+    <input type="hidden" asp-for="@Model.Restaurant.Menu.Id" name="menuId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="/Administration/Index" asp-route-view="_Restaurants" class="btn btn-secondary">Cancel</a>
+</form>
