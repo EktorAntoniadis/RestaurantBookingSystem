@@ -97,10 +97,17 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
         public RestaurantUser? GetRestaurantUserById(int id)
         {
-            return _context.RestaurantUsers
-                .Include(x => x.Restaurant)
-                .ThenInclude(x => x.RestaurantUsers)
-                .FirstOrDefault(x => x.Id == id);
+            var restaurantUser =  _context.RestaurantUsers
+                //.Include(x => x.Restaurant)
+                //    .ThenInclude(x => x.Menu)
+                //        .ThenInclude(x => x.FoodCategories)
+                //            .ThenInclude(x => x.FoodItems)
+                //.Include(x => x.Restaurant)
+                //    .ThenInclude(x => x.RestaurantUsers)
+                //.Include(x => x.Reservations)
+                .Where(x => x.Id == id).FirstOrDefault();
+
+            return restaurantUser;
         }
         public void UpdateRestaurantUser(RestaurantUser user)
         {

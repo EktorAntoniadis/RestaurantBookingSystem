@@ -14,7 +14,7 @@ namespace RestaurantBookingSystem.App.Pages.Administration.Restaurants
 
         public DeleteMenuModel(IRestaurantRepository repository)
         {
-            _repository = repository;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public IActionResult OnGet(int id)
