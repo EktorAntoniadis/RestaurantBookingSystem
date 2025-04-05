@@ -17,9 +17,19 @@ namespace RestaurantBookingSystem.App.Pages.Administration.Restaurants
         [BindProperty]
         public Restaurant ViewRestaurant { get; set; }
 
+        [BindProperty]
+        public string OwnerName { get; set; }
+
+        [BindProperty]
+        public int OwnerId { get; set; }
+
         public IActionResult OnGet(int id)
         {
             ViewRestaurant = _restaurantRepository.GetRestaurantById(id);
+
+            var restaurantOwner = ViewRestaurant.RestaurantUsers.FirstOrDefault(x => x.Role.Name == "Business Owner");
+            OwnerName = restaurantOwner == null ? string.Empty : $"{restaurantOwner.FirstName} {restaurantOwner.LastName}";
+            OwnerId = restaurantOwner == null ? 0 : restaurantOwner.Id;
             return Page();
         }       
     }

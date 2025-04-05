@@ -16,6 +16,14 @@
 
     <div class="card-body">
         <div class="row">
+            <div class="col-2"><p>Owner:</p></div>
+            <div class="col-10">
+                <p>
+                    <a asp-page="/Administration/Clients/ViewClient" asp-route-id="@Model.OwnerId" class="link-primary">@Model.OwnerName</a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-2"><p>Address:</p></div>
             <div class="col-10"> <p>@Model.ViewRestaurant.Address</p></div>
         </div>

@@ -27,6 +27,7 @@ namespace RestaurantBookingSystem.Repositories.Implementations
                 .ThenInclude(x=>x.FoodCategories)
                 .ThenInclude(x=>x.FoodItems)
                 .Include(x=>x.RestaurantUsers)
+                .ThenInclude(x=>x.Role)
                 .FirstOrDefault(x=>x.Id ==id);
         }
 
