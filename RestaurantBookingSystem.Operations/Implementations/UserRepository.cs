@@ -98,6 +98,7 @@ namespace RestaurantBookingSystem.Repositories.Implementations
         public RestaurantUser? GetRestaurantUserById(int id)
         {
             var restaurantUser =  _context.RestaurantUsers
+                .Include(x=>x.Role)
                 //.Include(x => x.Restaurant)
                 //    .ThenInclude(x => x.Menu)
                 //        .ThenInclude(x => x.FoodCategories)

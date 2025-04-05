@@ -32,6 +32,7 @@
                     <td>@owner.Restaurant?.Name</td>
                     <td>
                         <div class="btn btn-group">
+                        <a class="btn btm-sm btn-info" asp-page="/Administration/Clients/ViewClient" asp-route-id="@owner.Id">View</a>
                         <a class="btn btn-sm btn-primary" asp-page="/Administration/Clients/EditClient" asp-route-id="@owner.Id">Edit</a>
                         <a class="btn btn-sm btn-danger" asp-page="/Administration/Clients/DeleteClient" asp-route-id="@owner.Id">Delete</a>
                         </div>

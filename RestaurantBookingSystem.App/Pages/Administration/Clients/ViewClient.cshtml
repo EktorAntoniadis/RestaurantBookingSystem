@@ -1,0 +1,44 @@
+﻿@page "{id:int}"
+@model RestaurantBookingSystem.App.Pages.Administration.Clients.ViewClientModel
+@{
+    Layout = "_AdminLayout";
+}
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
+}
+
+<h2 class="mb-4">View Client</h2>
+
+<div class="card w-auto p-3">
+    <div class="card-header card-title text-center">
+        <h2>@Model.ViewRestaurantOwner.FirstName @Model.ViewRestaurantOwner.LastName</h2>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-2"> Username:</div>
+            <div class="col-10">@Model.ViewRestaurantOwner.Username</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> JoinDate:</div>
+            <div class="col-10">@Model.ViewRestaurantOwner.JoinDate</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> EndDate:</div>
+            <div class="col-10">@Model.ViewRestaurantOwner.EndDate</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> Email:</div>
+            <div class="col-10">@Model.ViewRestaurantOwner.Email</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> Phone:</div>
+            <div class="col-10">@Model.ViewRestaurantOwner.Phone</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> Role:</div>
+            <div class="col-10">@Model.ViewRestaurantOwner.Role.Name</div>
+        </div>
+    </div>
+</div>
