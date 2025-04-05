@@ -61,3 +61,34 @@
     <button type="submit" class="btn btn-primary" asp-page-handler="EditCurrentClient">Save</button>
     <a asp-page="/Administration/Index" class="btn btn-secondary" asp-route-view="_Clients">Back</a>
 </form>
+
+<form method="get">
+    <input type="hidden" asp-for="EditRestaurantOwner.Id" value="EditRestaurantOwner.Id" />
+    <div class="form-group">
+        <label asp-for="Name"> Search for a restauranat</label>
+        <input type="text" name="Name" asp-for="Name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+
+</form>
+
+@if (Model.Restaurants.Records.Any())
+{
+    <form method="post">
+        <input type="hidden" asp-for="EditRestaurantOwner.Id"/>
+        <div class="form-group mt-3">
+            <label class="form-label" asp-for="RestaurantId"> Select a restaurant</label>
+            <select asp-for="RestaurantId" class="form-control">
+                <option value="">-- Select a Restaurant --</option>
+                @foreach (var restaurant in Model.Restaurants.Records)
+                {
+                    <option value="@restaurant.Id">@restaurant.Name</option>
+                }
+            </select>
+            <span asp-validation-for="RestaurantId" class="text-danger"></span>
+        </div>
+        <button type="submit" asp-page-handler="AssociateRestaurant" class="btn btn-success mt-2"> Associate restaurant</button>
+
+    </form>
+
+}

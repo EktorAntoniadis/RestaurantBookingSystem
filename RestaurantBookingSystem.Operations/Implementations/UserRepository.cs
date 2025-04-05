@@ -165,6 +165,7 @@ namespace RestaurantBookingSystem.Repositories.Implementations
         {
             var query = _context.RestaurantUsers
                 .Include(x => x.Role)
+                .Include(x=> x.Restaurant)
                 .Where(x => x.Role.Name == "Business Owner")
                 .AsQueryable();
 
