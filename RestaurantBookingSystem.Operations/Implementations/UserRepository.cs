@@ -97,16 +97,15 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
         public RestaurantUser? GetRestaurantUserById(int id)
         {
-            var restaurantUser =  _context.RestaurantUsers
-                .Include(x=>x.Role)
-                //.Include(x => x.Restaurant)
-                //    .ThenInclude(x => x.Menu)
-                //        .ThenInclude(x => x.FoodCategories)
-                //            .ThenInclude(x => x.FoodItems)
-                //.Include(x => x.Restaurant)
-                //    .ThenInclude(x => x.RestaurantUsers)
-                //.Include(x => x.Reservations)
-                .Where(x => x.Id == id).FirstOrDefault();
+            var restaurantUser = _context.RestaurantUsers
+                .Include(x => x.Restaurant)
+                .ThenInclude(x => x.Menu)
+                .ThenInclude(x => x.FoodCategories)
+                .ThenInclude(x => x.FoodItems)
+                .Include(x => x.Restaurant)
+                .ThenInclude(x => x.RestaurantUsers)
+                .Include(x => x.Role)
+                .FirstOrDefault(x => x.Id == id);
 
             return restaurantUser;
         }
@@ -119,8 +118,10 @@ namespace RestaurantBookingSystem.Repositories.Implementations
         public void DeleteRestaurantUser(int id)
         {
             var user = GetRestaurantUserById(id);
+            
             if (user != null)
             {
+                user.RoleId = 0;
                 _context.RestaurantUsers.Remove(user);
                 _context.SaveChanges();
             }

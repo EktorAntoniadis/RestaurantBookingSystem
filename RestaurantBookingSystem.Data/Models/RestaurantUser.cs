@@ -21,8 +21,8 @@ namespace RestaurantBookingSystem.Data.Models
         public Role Role { get; set; }
 
         [ForeignKey(nameof(Restaurant))]
-        public int RestaurantId { get; set; }
-        public Restaurant Restaurant { get; set; }
+        public int? RestaurantId { get; set; }
+        public Restaurant? Restaurant { get; set; }
 
         public ICollection<Reservation>? Reservations { get; set; }
     }

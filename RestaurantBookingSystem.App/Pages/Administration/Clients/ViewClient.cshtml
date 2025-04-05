@@ -40,5 +40,15 @@
             <div class="col-2"> Role:</div>
             <div class="col-10">@Model.ViewRestaurantOwner.Role.Name</div>
         </div>
+        <div class="row">
+            <div class="col-2"> Restaurant:</div>
+            <div class="col-10">
+                <p>
+                    <a asp-page="/Administration/Restaurants/ViewRestaurant" asp-route-id="@Model.ViewRestaurantOwner.RestaurantId">
+                        @Model.ViewRestaurantOwner.Restaurant?.Name
+                    </a>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
