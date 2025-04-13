@@ -134,7 +134,9 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
         public SystemUser? GetSystemUserById(int id)
         {
-            return _context.SystemUsers.Find(id);
+            return _context.SystemUsers
+                .Include(x=>x.Role)
+                .FirstOrDefault(x=>x.Id == id);
         }
 
         public void UpdateSystemUser(SystemUser user)
