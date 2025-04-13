@@ -1,0 +1,60 @@
+﻿@page
+@model RestaurantBookingSystem.App.Pages.Administration.SystemUsers.AddSystemUserModel
+@{
+    Layout = "_AdminLayout";
+}
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
+}
+
+<h1> Add systemUser </h1>
+<form method="post" asp-page-handler="AddSystemUser">
+    <div class="mt-4">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group mt-3">
+                    <label class="form-label" asp-for="NewSystemUser.FirstName">First Name</label>
+                    <input class="form-control" type="text" asp-for="NewSystemUser.FirstName"/>
+                    <span asp-validation-for="NewSystemUser.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label class="form-label" asp-for="NewSystemUser.LastName">Last Name</label>
+                    <input class="form-control" type="text" asp-for="NewSystemUser.LastName" />
+                    <span asp-validation-for="NewSystemUser.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label class="form-label" asp-for="NewSystemUser.Email">Email</label>
+                    <input asp-for="NewSystemUser.Email" type="email" class="form-control"/>
+                    <span asp-validation-for="NewSystemUser.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label class="form-label" asp-for="NewSystemUser.Phone">Phone</label>
+                    <input asp-for="NewSystemUser.Phone" type="tel" class="form-control"/>
+                    <span asp-validation-for="NewSystemUser.Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label class="form-label" asp-for="NewSystemUser.Username">Username</label>
+                    <input asp-for="NewSystemUser.Username" type="text" class="form-control"/>
+                    <span asp-validation-for="NewSystemUser.Username" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label class="form-label" asp-for="NewSystemUser.Password">Password</label>
+                    <input asp-for="NewSystemUser.Password" typeof="password" class="form-control"/>
+                    <span asp-validation-for="NewSystemUser.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="NewSystemUser.RoleId" class="form-label">Role</label>
+                    <select class="form-control form-select" asp-for="NewSystemUser.RoleId" asp-items="Model.RolesSelectList">
+                        <option value="">-- Select Role --</option>
+                    </select>
+                    <span asp-validation-for="NewSystemUser.RoleId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <a asp-page="/Administration/Index" asp-route-view="_SystemUsers" class="btn btn-secondary">Back</a>
+            <button type="submit" class="btn btn-primary">Add New System User</button>
+        </div>
+    </div>
+</form>

@@ -3,34 +3,33 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 
-namespace RestaurantBookingSystem.App.Pages.Administration.Clients
+namespace RestaurantBookingSystem.App.Pages.Administration.Clients;
+
+public class AddClientModel : PageModel
 {
-    public class AddClientModel : PageModel
+    [BindProperty]
+    public RestaurantUser RestaurantOwner { get; set; }
+
+    private readonly IUserRepository _userRepository;
+
+    public AddClientModel(IUserRepository userRepository)
     {
-        [BindProperty]
-        public RestaurantUser RestaurantOwner { get; set; }
+        _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        RestaurantOwner = new RestaurantUser();
+    }
 
-        private readonly IUserRepository _userRepository;
+    public IActionResult OnPostAddNewClient()
+    {
+        var roles = _userRepository.GetRoles();
 
-        public AddClientModel(IUserRepository userRepository)
-        {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            RestaurantOwner = new RestaurantUser();
-        }
+        var businessOwnerRole = roles.FirstOrDefault(x=>x.Name == "Business Owner");
 
-        public IActionResult OnPostAddNewClient()
-        {
-            var roles = _userRepository.GetRoles();
+        RestaurantOwner.Role = businessOwnerRole!;
+        RestaurantOwner.JoinDate = DateTime.Now;
+        RestaurantOwner.EndDate = null;
 
-            var businessOwnerRole = roles.FirstOrDefault(x=>x.Name == "Business Owner");
+        _userRepository.AddRestaurantUser(RestaurantOwner);
 
-            RestaurantOwner.Role = businessOwnerRole!;
-            RestaurantOwner.JoinDate = DateTime.Now;
-            RestaurantOwner.EndDate = null;
-
-            _userRepository.AddRestaurantUser(RestaurantOwner);
-
-            return RedirectToPage("/Administration/Index", new { view = "_Clients" });
-        }
+        return RedirectToPage("/Administration/Index", new { view = "_Clients" });
     }
 }

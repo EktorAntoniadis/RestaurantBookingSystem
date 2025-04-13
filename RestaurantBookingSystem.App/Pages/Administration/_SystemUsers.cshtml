@@ -1,0 +1,47 @@
+﻿@model RestaurantBookingSystem.App.Pages.Administration.AdminPageModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <h2>Application employees</h2>
+</div>
+
+<a asp-page="/Administration/SystemUsers/AddSystemUser" class="btn btn-success mt-3 mb-3">Add New Employee</a>
+
+@if (Model.SystemUsers.TotalCount > 0)
+{
+    <table class="table table-light table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Join Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sysUser in Model.SystemUsers.Records)
+            {
+                <tr>
+                    <td>@sysUser.Id</td>
+                    <td>@sysUser.FirstName</td>
+                    <td>@sysUser.LastName</td>
+                    <td>@sysUser.Username</td>
+                    <td>@sysUser.JoinDate.ToString("dd/MM/yyyy")</td>
+                    <td>@(sysUser.EndDate != null ? sysUser.EndDate!.Value.ToString("dd/MM/yyyy") : string.Empty)</td>
+                    <td>
+                        <div class="btn btn-group">
+                            <a class="btn btn-primary" asp-page="/Administration/SystemUsers/ViewSystemUser" asp-route-id="@sysUser.Id">View Employee</a>
+                            <a class="btn btn-warning" asp-page="/Administration/SystemUsers/EditSystemUser" asp-route-id="@sysUser.Id">Edit Employee</a>
+                            <a class="btn btn-danger" asp-page="/Administration/SystemUsers/DeleteSystemUser" asp-route-id="@sysUser.Id">Delete Employee</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
