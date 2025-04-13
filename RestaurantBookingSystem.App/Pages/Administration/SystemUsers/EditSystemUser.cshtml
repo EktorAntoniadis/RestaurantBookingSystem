@@ -1,0 +1,50 @@
+﻿@page "{id:int}"
+@model RestaurantBookingSystem.App.Pages.Administration.SystemUsers.EditSystemUserModel
+@{
+    Layout = "_AdminLayout";
+}
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
+}
+
+<form method="post" class="mt-4" asp-page-handler="UpdateSystemUser">
+    <input type="hidden" asp-for="EditSystemUser.Id" />
+    <input type="hidden" asp-for="EditSystemUser.Password"/>
+    <input type="hidden" asp-for="EditSystemUser.JoinDate" />
+    <input type="hidden" asp-for="EditSystemUser.EndDate" />
+    <div class="form-group">
+        <label class="form-label" asp-for="EditSystemUser.FirstName">First Name</label>
+        <input class="form-control" asp-for="EditSystemUser.FirstName" />
+        <span asp-validation-for="EditSystemUser.FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="EditSystemUser.LastName">Last Name</label>
+        <input class="form-control" asp-for="EditSystemUser.LastName" />
+        <span asp-validation-for="EditSystemUser.LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="EditSystemUser.Email">Email</label>
+        <input class="form-control" asp-for="EditSystemUser.Email" />
+        <span asp-validation-for="EditSystemUser.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="EditSystemUser.Phone">Phone</label>
+        <input class="form-control" asp-for="EditSystemUser.Phone" />
+        <span asp-validation-for="EditSystemUser.Phone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="EditSystemUser.Username">Username</label>
+        <input class="form-control" asp-for="EditSystemUser.Username" />
+        <span asp-validation-for="EditSystemUser.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label asp-for="EditSystemUser.RoleId" class="form-label">Role</label>
+        <select class="form-control form-select" asp-for="EditSystemUser.RoleId" asp-items="Model.RolesSelectList">
+            <option value="">-- Select Role --</option>
+        </select>
+        <span asp-validation-for="EditSystemUser.RoleId" class="text-danger"></span>
+    </div>
+    <button class="btn btn-outline-success mt-3">Edit System User</button>
+    <a asp-page="/Administration/Index" asp-route-view="_SystemUsers" class="btn btn-secondary">Cancel</a>
+</form>
