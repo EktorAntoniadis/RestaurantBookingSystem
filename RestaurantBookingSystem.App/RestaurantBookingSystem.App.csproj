@@ -21,4 +21,9 @@
     <ProjectReference Include="..\RestaurantBookingSystem.Operations\RestaurantBookingSystem.Operations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\RestaurantUsers\Customers\" />
+    <Folder Include="Pages\RestaurantUsers\Reservations\" />
+  </ItemGroup>
+
 </Project>

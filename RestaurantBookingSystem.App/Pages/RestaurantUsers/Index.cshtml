@@ -4,7 +4,15 @@
     Layout = "_RestaurantUserLayout";
 }
 
+@section EmployeeSideBar {
+    <partial name="RestaurantUsers/_EmployeeSideBar" />
+}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to the pages of the restaurant users</h1>
-</div>
+@if (!string.IsNullOrEmpty(Model.ViewName))
+{
+    @await Html.PartialAsync(Model.ViewName)
+}
+else
+{
+    <p>No content to display.</p>
+}

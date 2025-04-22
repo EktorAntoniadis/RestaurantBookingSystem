@@ -1,0 +1,61 @@
+﻿@page "{id:int}"
+@model AddEmployeeModel
+@{
+    Layout = "_AdminLayout";
+}
+
+@section AdminSideBar {
+    <partial name="Administration/_AdminSidebar" />
+}
+
+
+<h1> Add employee </h1>
+<form method="post" asp-page-handler="AddNewEmployee">
+    <div class="form-group mb-3">
+        <label asp-for="AddEmployee.FirstName" class="form-label fw-bold">First Name</label>
+        <input asp-for="AddEmployee.FirstName" type="text" class="form-control" placeholder="Type the first name">
+        <span asp-validation-for="AddEmployee.FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="AddEmployee.LastName" class="form-label fw-bold">Last Name</label>
+        <input asp-for="AddEmployee.LastName" class="form-control" placeholder="Type the last name">
+        <span asp-validation-for="AddEmployee.LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group  mb-3">
+        <label asp-for="AddEmployee.Username" class="form-label fw-bold">Username</label>
+        <input asp-for="AddEmployee.Username" type="text" class="form-control" placeholder="Type the username">
+        <span asp-validation-for="AddEmployee.Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="AddEmployee.Password" class="form-label fw-bold">Password</label>
+        <input asp-for="AddEmployee.Password" type="password" class="form-control" placeholder="Type the password">
+        <span asp-validation-for="AddEmployee.Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group  mb-3">
+        <label asp-for="AddEmployee.Email" class="form-label fw-bold">Email</label>
+        <input asp-for="AddEmployee.Email" type="text" class="form-control" placeholder="Type the email">
+        <span asp-validation-for="AddEmployee.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group  mb-3">
+        <label asp-for="AddEmployee.Phone" class="form-label fw-bold">Phone</label>
+        <input asp-for="AddEmployee.Phone" type="text" class="form-control" placeholder="Type the phone">
+        <span asp-validation-for="AddEmployee.Phone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group  mb-3">
+        <label asp-for="AddEmployee.RoleId" class="form-label">Role</label>
+        <select class="form-control  form-select" asp-for="AddEmployee.RoleId" asp-items="Model.RoleSelecList">
+            <option value="">-- Select Role--</option>
+
+        </select>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Add Employees</button>
+        <a asp-page="/RestaurantUsers/Index" asp-route-view="_Employees" class="btn btn-secondary">Back</a>
+    </div>
+</form>
