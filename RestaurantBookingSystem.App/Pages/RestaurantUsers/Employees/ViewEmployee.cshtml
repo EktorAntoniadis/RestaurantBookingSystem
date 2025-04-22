@@ -1,0 +1,45 @@
+﻿@page "{id:int}"
+@model ViewEmployeeModel
+@{
+    Layout = "_RestaurantUserLayout";
+}
+
+@section EmployeeSideBar {
+    <partial name="RestaurantUsers/_EmployeeSideBar" />
+}
+
+
+<h2 class="mb-4">View Employee</h2>
+
+<div class="card w-auto p-3">
+    <div class="card-header card-title text-center">
+        <h2>@Model.ViewEmployee.FirstName @Model.ViewEmployee.LastName</h2>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-2"> Username:</div>
+            <div class="col-10">@Model.ViewEmployee.Username</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> JoinDate:</div>
+            <div class="col-10">@Model.ViewEmployee.JoinDate</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> EndDate:</div>
+            <div class="col-10">@Model.ViewEmployee.EndDate</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> Email:</div>
+            <div class="col-10">@Model.ViewEmployee.Email</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> Phone:</div>
+            <div class="col-10">@Model.ViewEmployee.Phone</div>
+        </div>
+        <div class="row">
+            <div class="col-2"> Role:</div>
+            <div class="col-10">@Model.ViewEmployee.Role.Name</div>
+        </div>       
+    </div>
+</div>

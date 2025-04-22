@@ -1,13 +1,12 @@
 ﻿@page "{id:int}"
 @model AddEmployeeModel
 @{
-    Layout = "_AdminLayout";
+    Layout = "_RestaurantUserLayout";
 }
 
-@section AdminSideBar {
-    <partial name="Administration/_AdminSidebar" />
+@section EmployeeSideBar {
+    <partial name="RestaurantUsers/_EmployeeSideBar" />
 }
-
 
 <h1> Add employee </h1>
 <form method="post" asp-page-handler="AddNewEmployee">

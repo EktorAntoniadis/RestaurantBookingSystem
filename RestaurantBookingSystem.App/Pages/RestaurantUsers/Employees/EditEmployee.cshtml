@@ -1,0 +1,52 @@
+﻿@page "{id:int}"
+@model EditEmployeeModel
+@{
+    Layout = "_RestaurantUserLayout";
+}
+
+@section EmployeeSideBar {
+    <partial name="RestaurantUsers/_EmployeeSideBar" />
+}
+
+<h2>Edit employee</h2>
+
+<form method="post" asp-page-handler="EditExistingEmployee">
+    <input type="hidden" asp-for="EditEmployee.Id" />
+    <input type="hidden" asp-for="EditEmployee.RoleId" />
+    <input type="hidden" asp-for="EditEmployee.Password" />
+
+    <div class="form-group mb-3">
+        <label asp-for="EditEmployee.FirstName" class="form-label">First Name</label>
+        <input asp-for="EditEmployee.FirstName" type="text" class="form-control" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="EditEmployee.LastName" class="form-label">Last Name</label>
+        <input asp-for="EditEmployee.LastName" type="text" class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="EditEmployee.Username" class="form-label">Username</label>
+        <input asp-for="EditEmployee.Username" type="text" class="form-control" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="EditEmployee.Email" class="form-label">Email</label>
+        <input asp-for="EditEmployee.Email" type="email" class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="EditEmployee.Phone" class="form-label">Phone</label>
+        <input asp-for="EditEmployee.Phone" type="text" class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="EditEmployee.JoinDate" class="form-label">Join Date</label>
+        <input type="hidden" asp-for="EditEmployee.JoinDate" />
+        <p class="form-control">@Model.EditEmployee.JoinDate.ToString("dd/MM/yyyy")</p>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="EditEmployee.EndDate" class="form-label">End Date</label>
+        <input asp-for="EditEmployee.EndDate" type="hidden"/>
+        <p class="form-control">@Model.EditEmployee.EndDate.Value.ToString("dd/MM/yyyy")</p>
+    </div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="EditEmployee">Save</button>
+    <a asp-page="/RestaurantUsers/Index" class="btn btn-secondary" asp-route-view="_Employees">Back</a>
+</form>

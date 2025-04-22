@@ -1,0 +1,17 @@
+﻿@page "{id:int}"
+@model DeleteEmployeeModel
+@{
+    Layout = "_RestaurantUserLayout";
+}
+
+@section EmployeeSideBar {
+    <partial name="RestaurantUsers/_EmployeeSideBar" />
+}
+<h2>Are you sure you want to delete this employee?</h2>
+<h3>@Model.EmployeeToDelete.FirstName @Model.EmployeeToDelete.LastName</h3>
+
+<form method="post" asp-page-handler="Delete">
+    <input type="hidden" asp-for="@Model.EmployeeToDelete.Id"/>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="/RestaurantUsers/Index" asp-route-view="_Employees" class="btn btn-secondary">Cancel</a>
+</form>
