@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RestaurantBookingSystem.Data.Models;
@@ -7,16 +8,22 @@ namespace RestaurantBookingSystem.App.Pages.Administration.Clients;
 
 public class AddClientModel : PageModel
 {
-    [BindProperty]
-    public RestaurantUser RestaurantOwner { get; set; }
 
     private readonly IUserRepository _userRepository;
+    private PasswordHasher<RestaurantUser> _passwordHasher;
 
     public AddClientModel(IUserRepository userRepository)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         RestaurantOwner = new RestaurantUser();
+        _passwordHasher = new PasswordHasher<RestaurantUser>();
     }
+
+
+    [BindProperty]
+    public RestaurantUser RestaurantOwner { get; set; }
+
+  
 
     public IActionResult OnPostAddNewClient()
     {
@@ -27,6 +34,7 @@ public class AddClientModel : PageModel
         RestaurantOwner.Role = businessOwnerRole!;
         RestaurantOwner.JoinDate = DateTime.Now;
         RestaurantOwner.EndDate = null;
+        RestaurantOwner.Password = _passwordHasher.HashPassword(RestaurantOwner, RestaurantOwner.Password);
 
         _userRepository.AddRestaurantUser(RestaurantOwner);
 

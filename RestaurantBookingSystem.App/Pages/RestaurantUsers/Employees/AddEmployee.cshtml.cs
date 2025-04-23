@@ -9,18 +9,21 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Employees
 {
     public class AddEmployeeModel : PageModel
     {
+        private readonly IUserRepository _userRepository;
+        private PasswordHasher<RestaurantUser> _passwordHasher;
+        public AddEmployeeModel(IUserRepository userRepository)
+        {
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            AddEmployee = new RestaurantUser();
+            _passwordHasher = new PasswordHasher<RestaurantUser>();
+        }
+
         [BindProperty]
         public RestaurantUser AddEmployee { get; set; }
 
         public List<SelectListItem> RoleSelecList { get; set; }
 
-        private readonly IUserRepository _userRepository;
-
-        public AddEmployeeModel(IUserRepository userRepository)
-        {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            AddEmployee = new RestaurantUser();
-        }
+        
 
         public IActionResult OnGet()
         {
@@ -58,6 +61,7 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Employees
 
             AddEmployee.JoinDate = DateTime.Now;
             AddEmployee.EndDate = null;
+            AddEmployee.Password = _passwordHasher.HashPassword(AddEmployee, AddEmployee.Password);
             _userRepository.AddRestaurantUser(AddEmployee);
 
             return RedirectToPage("/RestaurantUsers/Index", new { view = "_Employees" });
