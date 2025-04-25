@@ -1,0 +1,17 @@
+﻿@page
+@model RestaurantBookingSystem.App.Pages.Profile.LoginModel
+@{
+    Layout = "_Layout";
+}
+
+<form method="post">
+    <div class="form-group mt-3">
+        <label asp-for="Username" class="form-label">Username</label>
+        <input type="text" asp-for="Username" class="form-control" />
+    </div>
+    <div class="form-group mt-3">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input type="text" asp-for="Password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>

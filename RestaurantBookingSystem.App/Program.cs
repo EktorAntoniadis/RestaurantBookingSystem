@@ -5,6 +5,8 @@ using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Data.Seeding;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories.Implementations;
+using RestaurantBookingSystem.Services.BusinessLogic.Implementations;
+using RestaurantBookingSystem.Services.BusinessLogic.Interfaces;
 using System.Text;
 
 namespace RestaurantBookingSystem.App
@@ -24,6 +26,7 @@ namespace RestaurantBookingSystem.App
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddAuthentication("JwtBearer").AddJwtBearer("JwtBearer", options =>
