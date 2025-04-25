@@ -44,5 +44,9 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
             DateTime? endDate = null,
             string? sortColumn = "firstName",
             string? sortDirection = "asc");
+
+        SystemUser? GetSystemUserByUsername(string username);
+
+        RestaurantUser? GetRestaurantUserByUsername(string username);
     }
 }

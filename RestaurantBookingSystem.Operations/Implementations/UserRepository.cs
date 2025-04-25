@@ -271,5 +271,23 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
             return new PaginatedList<SystemUser>(sysUsers, totalRecords, pageIndex, pageSize);
         }
+
+        public SystemUser? GetSystemUserByUsername(string username)
+        {
+            var sysUser = _context.SystemUsers
+                .Include(x => x.Role)
+                .ThenInclude(x => x.Permissions)
+                .FirstOrDefault(s => s.Username == username);
+            return sysUser;
+        }
+
+        public RestaurantUser? GetRestaurantUserByUsername(string username)
+        {
+            var resUser = _context.RestaurantUsers
+                .Include(x => x.Role)
+                .ThenInclude(x => x.Permissions)
+                .FirstOrDefault(x => x.Username == username);
+            return resUser;
+        }
     }
 }
