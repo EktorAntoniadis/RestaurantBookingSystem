@@ -20,11 +20,11 @@
   <ItemGroup>
     <ProjectReference Include="..\RestaurantBookingSystem.Data\RestaurantBookingSystem.Data.csproj" />
     <ProjectReference Include="..\RestaurantBookingSystem.Operations\RestaurantBookingSystem.Operations.csproj" />
+    <ProjectReference Include="..\RestaurantBookingSystem.Services\RestaurantBookingSystem.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Pages\RestaurantUsers\Customers\" />
-    <Folder Include="Pages\RestaurantUsers\Reservations\" />
   </ItemGroup>
 
 </Project>
