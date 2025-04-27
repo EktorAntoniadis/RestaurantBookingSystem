@@ -29,7 +29,11 @@ namespace RestaurantBookingSystem.App
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddHttpContextAccessor();
 
-            builder.Services.AddAuthentication("JwtBearer").AddJwtBearer("JwtBearer", options =>
+            var audience = builder.Configuration["JwtSettings:Audience"];
+            Console.WriteLine(audience);
+
+            builder.Services.AddAuthentication("JwtBearer")
+                .AddJwtBearer("JwtBearer", options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -39,6 +43,7 @@ namespace RestaurantBookingSystem.App
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
                     ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    ValidAudiences = [builder.Configuration["JwtSettings:Audience"]],
                     IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
                 };

@@ -20,8 +20,24 @@ namespace RestaurantBookingSystem.App.Pages.Profile
         [BindProperty]
         public string Password { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if(Request.Cookies.TryGetValue("jwt_token", out string token))
+            {
+                var (isValid, userType) = _userService.IsTokenValid(token);
+
+                if (isValid)
+                {
+                    return userType switch
+                    {
+                        "SystemUser" => RedirectToPage("/Administration/Index", new { view = "_Dashboard" }),
+                        "RestaurantUser" => RedirectToPage("/RestaurantUsers/Index", new { view = "_Dashboard" }),
+                        _ => RedirectToPage("/Profile/Login")
+                    };
+                }
+            }
+
+            return Page();
         }
 
         public IActionResult OnPost()

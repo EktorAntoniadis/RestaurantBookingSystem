@@ -30,13 +30,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Administration/Index">Administration</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav">
                         @if(User.Identity?.IsAuthenticated ?? false){
-                            <li class="nav-item text-dark">
-                                <span> Hello, @User.Identity.Name!</span>
+                            <li class="nav-item">
+                                <span class="nav-link text-dark" > Hello, @User.Identity.Name!</span>
                             </li>
-                            <li class="nav-item" asp-page="/Profile/Logout">
-                                <form method="post">
+                            <li class="nav-item">
+                                <form method="post" asp-page="/Profile/Logout">
                                     <button type="submit" class="btn btn-link nav-link">Logout</button>
                                 </form>
                             </li>

@@ -65,9 +65,11 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
 
             var tokenExpiration = DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["JwtSettings:ExpirationMinutes"]));
 
+            var audience = _configuration["JwtSettings:Audience"];
+
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:Issuer"],
-                audience: _configuration["JwtSettings:Issuer"],
+                audience: audience,
                 claims: claims,
                 expires: tokenExpiration,
                 signingCredentials: credentials
@@ -81,6 +83,8 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]!));
 
+            var audience = _configuration["JwtSettings:Audience"];
+
             try
             {
                 var claimsPrincipal = tokenHandler.ValidateToken(token, new TokenValidationParameters
@@ -88,7 +92,8 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidIssuer = _configuration["JwtSettings:Issuer"],
-                    ValidAudience = _configuration["JwtSettings:Audience"],
+                    ValidAudience = audience,
+                    ValidAudiences = [audience],
                     IssuerSigningKey = key,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
