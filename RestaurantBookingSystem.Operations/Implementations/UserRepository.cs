@@ -289,5 +289,14 @@ namespace RestaurantBookingSystem.Repositories.Implementations
                 .FirstOrDefault(x => x.Username == username);
             return resUser;
         }
+
+        public IEnumerable<RestaurantUser> GetEmployeesByRestaurant(int restaurantId)
+        {
+            var employees = _context.RestaurantUsers
+                .Include(x => x.Role)
+                .Where(x => x.RestaurantId == restaurantId).ToList();
+
+            return employees;
+        }
     }
 }

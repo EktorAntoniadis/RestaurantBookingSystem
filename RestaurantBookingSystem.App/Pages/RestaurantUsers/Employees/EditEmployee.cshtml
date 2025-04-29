@@ -14,6 +14,9 @@
     <input type="hidden" asp-for="EditEmployee.Id" />
     <input type="hidden" asp-for="EditEmployee.RoleId" />
     <input type="hidden" asp-for="EditEmployee.Password" />
+    <input type="hidden" asp-for="EditEmployee.JoinDate" />
+    <input type="hidden" asp-for="EditEmployee.EndDate" />
+    <input type="hidden" asp-for="EditEmployee.RestaurantId" />
 
     <div class="form-group mb-3">
         <label asp-for="EditEmployee.FirstName" class="form-label">First Name</label>
@@ -45,8 +48,12 @@
     <div class="form-group mb-3">
         <label asp-for="EditEmployee.EndDate" class="form-label">End Date</label>
         <input asp-for="EditEmployee.EndDate" type="hidden"/>
-        <p class="form-control">@Model.EditEmployee.EndDate.Value.ToString("dd/MM/yyyy")</p>
+        <p class="form-control">
+            @if(Model.EditEmployee.EndDate.HasValue){
+                @Model.EditEmployee.EndDate!.Value.ToString("dd/MM/yyyy")
+            }            
+            </p>
     </div>
-    <button type="submit" class="btn btn-primary" asp-page-handler="EditEmployee">Save</button>
+    <button type="submit" class="btn btn-primary">Save</button>
     <a asp-page="/RestaurantUsers/Index" class="btn btn-secondary" asp-route-view="_Employees">Back</a>
 </form>

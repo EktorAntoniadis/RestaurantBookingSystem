@@ -45,6 +45,9 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Employees
             ModelState.Remove("AddEmployee.Role");
             ModelState.Remove("AddEmployee.Reservations");
 
+            var restaurantIdClaim = User.FindFirst("RestaurantId");
+            var restaurantId = int.Parse(restaurantIdClaim.Value);
+
             if (!ModelState.IsValid)
             {
                 var roles = _userRepository.GetRoles();
@@ -61,6 +64,7 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Employees
 
             AddEmployee.JoinDate = DateTime.Now;
             AddEmployee.EndDate = null;
+            AddEmployee.RestaurantId = restaurantId;
             AddEmployee.Password = _passwordHasher.HashPassword(AddEmployee, AddEmployee.Password);
             _userRepository.AddRestaurantUser(AddEmployee);
 

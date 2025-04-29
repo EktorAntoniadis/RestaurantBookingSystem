@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Primitives;
+using RestaurantBookingSystem.Data.Models;
+using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories.Implementations;
+using System.Data;
 
 namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
 {
@@ -16,9 +19,25 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
+
+        public string? ViewRoles { get; set; }
+
+        public IEnumerable<Role> Roles { get; set; }
+
+        public IEnumerable<RestaurantUser> Employees { get; set; }
+
         public void OnGet(string view)
         {
             ViewName = string.IsNullOrEmpty(view) ? "_Dashboard" : view;
+
+            var restaurantIdClaim = User.FindFirst("RestaurantId");
+            var restaurantId = int.Parse(restaurantIdClaim.Value);
+     
+
+            if (view == "_Employees")
+            {
+                Employees = _userRepository.GetEmployeesByRestaurant(restaurantId);
+            }
         }
     }
 }

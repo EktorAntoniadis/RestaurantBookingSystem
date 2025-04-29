@@ -48,5 +48,6 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
         SystemUser? GetSystemUserByUsername(string username);
 
         RestaurantUser? GetRestaurantUserByUsername(string username);
+        public IEnumerable<RestaurantUser> GetEmployeesByRestaurant(int restaurantId);
     }
 }

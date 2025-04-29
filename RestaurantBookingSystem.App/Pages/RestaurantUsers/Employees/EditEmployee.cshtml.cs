@@ -26,7 +26,7 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Employees
         public IActionResult OnPostEditExistingEmployee()
         {
             _userRepository.UpdateRestaurantUser(EditEmployee);
-            return RedirectToPage("/Administration/Index", new { view = "_Employees" });
+            return RedirectToPage("/RestaurantUsers/Index", new { view = "_Employees" });
         }        
     }
 }
