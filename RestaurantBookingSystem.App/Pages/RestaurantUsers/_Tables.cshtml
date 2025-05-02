@@ -1,0 +1,41 @@
+﻿@model RestaurantBookingSystem.App.Pages.RestaurantUsers.IndexModel
+@{
+}
+
+<div class="container">
+    <h2>Tables</h2>
+</div>
+
+<a asp-page="/RestaurantUsers/Tables/AddTable" class="btn btn-success mt-3 mb-3">Add Table</a>
+
+@if (Model.AllTables.Any())
+{
+    <table class="table table-light table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Table name</th>
+                <th>Table status</th>
+                <th>Number of people</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var table in Model.AllTables)
+            {
+                <tr>
+                    <td>@table.Id</td>
+                    <td>@table.TableName</td>
+                    <td>@table.Status.Status</td>
+                    <td>@table.NumberOfPeople</td>
+                                    
+                    <td>
+                        <div class="btn btn-group">                           
+                            <a class="btn btn-warning" asp-page="/RestaurantUsers/Tables/EditTable" asp-route-id="@table.Id">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

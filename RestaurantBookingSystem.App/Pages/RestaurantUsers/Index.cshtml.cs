@@ -14,10 +14,14 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
         public string? ViewName { get; set; }
 
         private readonly IUserRepository _userRepository;
+        private readonly IRestaurantRepository _restaurantRepository;
 
-        public IndexModel(IUserRepository userRepository)
+        public IndexModel(
+            IUserRepository userRepository,
+            IRestaurantRepository restaurantRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _restaurantRepository = restaurantRepository ?? throw new ArgumentNullException(nameof(restaurantRepository));
         }
 
         public string? ViewRoles { get; set; }
@@ -26,7 +30,9 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
 
         public IEnumerable<RestaurantUser> Employees { get; set; }
 
-        public void OnGet(string view)
+        public IEnumerable<Table> AllTables { get; set; }
+
+        public IActionResult OnGet(string view)
         {
             ViewName = string.IsNullOrEmpty(view) ? "_Dashboard" : view;
 
@@ -38,6 +44,13 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
             {
                 Employees = _userRepository.GetEmployeesByRestaurant(restaurantId);
             }
+
+            if (view == "_Tables")
+            {
+                AllTables = _restaurantRepository.GetAllTables(restaurantId).OrderBy(x => x.Id);
+            }
+
+            return Page();
         }
     }
 }
