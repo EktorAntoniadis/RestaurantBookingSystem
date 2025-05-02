@@ -1,0 +1,31 @@
+﻿@page "{id:int}"
+@model RestaurantBookingSystem.App.Pages.RestaurantUsers.Tables.EditTableModel
+@{
+    ViewData["Edit Table"] = "Edit Table";
+    Layout = "_RestaurantUserLayout";
+}
+
+@section EmployeeSideBar {
+    <partial name="RestaurantUsers/_EmployeeSideBar" />
+}
+
+<h1> Edit table </h1>
+<form method="post" asp-page-handler="EditCurrentTable">
+    <input type="hidden" asp-for="EditTable.Id " />
+    <input type="hidden" asp-for="EditTable.RestaurantId " />
+    <input type="hidden" asp-for="EditTable.TableStatusId" />
+
+    <div class="form-group mb-3">
+        <label asp-for="EditTable.TableName" class="form-labe">Table Name</label>
+        <input asp-for="EditTable.TableName" type="text" class="form-control" placeholder="Type the table name">        
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="EditTable.NumberOfPeople" class="form-label fw-bold">Number Of People</label>
+        <input asp-for="EditTable.NumberOfPeople" class="form-control" placeholder="Type the number of people">       
+    </div>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-info">Edit Table</button>
+        <a asp-page="/RestaurantUsers/Index" asp-route-view="_Tables" class="btn btn-secondary">Back</a>
+    </div>
+</form>
