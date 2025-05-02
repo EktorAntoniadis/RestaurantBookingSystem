@@ -190,5 +190,44 @@ namespace RestaurantBookingSystem.Data.Seeding
                 _context.SaveChanges();
             }
         }
+
+        public void SeedRestaurantData()
+        {
+            if (!_context.ReservationStatuses.Any())
+            {
+                _context.ReservationStatuses.AddRange(
+                    new ReservationStatus { Status = "Pending" },
+                    new ReservationStatus { Status = "Confirmed" },
+                    new ReservationStatus { Status = "Seated" },
+                    new ReservationStatus { Status = "Cancelled" },
+                    new ReservationStatus { Status = "Completed" },
+                    new ReservationStatus { Status = "No-Show" }
+                );
+            }
+
+            if (!_context.OrderStatuses.Any())
+            {
+                _context.OrderStatuses.AddRange(
+                    new OrderStatus { Status = "Ordered" },
+                    new OrderStatus { Status = "Preparing" },
+                    new OrderStatus { Status = "Ready" },
+                    new OrderStatus { Status = "Served" },
+                    new OrderStatus { Status = "Cancelled" }
+                );
+            }
+
+            if (!_context.TableStatuses.Any())
+            {
+                _context.TableStatuses.AddRange(
+                    new TableStatus { Status = "Available" },
+                    new TableStatus { Status = "Reserved" },
+                    new TableStatus { Status = "Occupied" },
+                    new TableStatus { Status = "Cleaning" },
+                    new TableStatus { Status = "Out of Service" }
+                );
+            }
+
+            _context.SaveChanges();
+        }
     }
 }

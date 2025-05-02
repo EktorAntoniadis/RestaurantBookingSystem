@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantBookingSystem.Data.Models
 {
-    public class Table: CommonData
+    public class Table
     {
         public int Id { get; set; }
         public string TableName { get; set; }

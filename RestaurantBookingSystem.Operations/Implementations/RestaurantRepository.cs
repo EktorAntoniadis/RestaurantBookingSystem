@@ -23,12 +23,12 @@ namespace RestaurantBookingSystem.Repositories.Implementations
         public Restaurant? GetRestaurantById(int id)
         {
             return _context.Restaurants
-                .Include(x=>x.Menu)
-                .ThenInclude(x=>x.FoodCategories)
-                .ThenInclude(x=>x.FoodItems)
-                .Include(x=>x.RestaurantUsers)
-                .ThenInclude(x=>x.Role)
-                .FirstOrDefault(x=>x.Id ==id);
+                .Include(x => x.Menu)
+                .ThenInclude(x => x.FoodCategories)
+                .ThenInclude(x => x.FoodItems)
+                .Include(x => x.RestaurantUsers)
+                .ThenInclude(x => x.Role)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public void UpdateRestaurant(Restaurant restaurant)
@@ -241,7 +241,7 @@ namespace RestaurantBookingSystem.Repositories.Implementations
             string? sortColumn = "Name",
             string? sortDirection = "asc")
         {
-            var query = _context.Restaurants.Include(x=>x.Menu).AsQueryable();
+            var query = _context.Restaurants.Include(x => x.Menu).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
             {
@@ -300,6 +300,57 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
             return new PaginatedList<Restaurant>(restaurants, totalRecords, pageIndex, pageSize);
 
+        }
+
+        public List<Table> GetAllTables(int restaurantId)
+        {
+            return _context.Tables
+                           .Include(x => x.Status)
+                           .Where(t => t.RestaurantId == restaurantId)
+                           .ToList();
+        }
+
+        public List<Table> GetTablesByStatus(int restaurantId, string status)
+        {
+            return _context.Tables
+                           .Where(t => t.RestaurantId == restaurantId
+                           && t.Status.Status == status)
+                           .ToList();
+        }
+
+        public List<TableStatus> GetTableStatuses()
+        {
+            return _context.TableStatuses.ToList();
+        }
+
+        public List<OrderStatus> GetOrderStatuses()
+        {
+            return _context.OrderStatuses.ToList();
+        }
+
+        public List<ReservationStatus> GetReservationStatuses()
+        {
+            return _context.ReservationStatuses.ToList();
+        }
+
+        public void AddTable(Table table)
+        {
+            _context.Tables.Add(table);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTable(Table table)
+        {
+            _context.Tables.Update(table);
+            _context.SaveChanges();
+        }
+
+        public Table? GetTableById(int id)
+        {
+            return _context.Tables
+                .Include(x => x.Restaurant)
+                .Include(x => x.Status)
+                .FirstOrDefault(t => t.Id == id);
         }
     }
 }

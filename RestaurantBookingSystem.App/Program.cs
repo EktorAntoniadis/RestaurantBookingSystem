@@ -90,6 +90,7 @@ namespace RestaurantBookingSystem.App
 
                 var seeder = new DatabaseSeed(context);
                 seeder.SeedAdministrationData();
+                seeder.SeedRestaurantData();
             }
 
             app.Run();

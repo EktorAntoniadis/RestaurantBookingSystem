@@ -54,5 +54,20 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
             string? sortDirection = "asc");
         void UpdateFoodItem(FoodItem item);
         void DeleteFoodItem(int id);
+
+        List<Table> GetAllTables(int restaurantId);
+
+        List<Table> GetTablesByStatus(int restaurantId, string status);
+
+        List<TableStatus> GetTableStatuses();
+
+        List<OrderStatus> GetOrderStatuses();
+        List<ReservationStatus> GetReservationStatuses();
+
+        void AddTable(Table table);
+
+        void UpdateTable(Table table);
+
+        Table? GetTableById(int id);
     }
 }
