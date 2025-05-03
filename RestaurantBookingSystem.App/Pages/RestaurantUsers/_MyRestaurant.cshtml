@@ -1,9 +1,92 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model RestaurantBookingSystem.App.Pages.RestaurantUsers.IndexModel
 @{
 }
 
-<div class="container">
-    <h2>My Restaurant</h2>
+<div class="p-4">
+    <div class="card w-auto">
+        <div class="card-header card-title text-center">
+            <h2>@Model.MyRestaurant.Name</h2>
+            <p>@Model.MyRestaurant.Description</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-2"><p>Owner:</p></div>
+                <div class="col-10"><p>@Model.OwnerName</p></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><p>Address:</p></div>
+                <div class="col-10"><p>@Model.MyRestaurant.Address</p></div>
+            </div>
+
+            <div class="row">
+                <div class="col-2"><p>City:</p></div>
+                <div class="col-10"><p>@Model.MyRestaurant.City</p></div>
+            </div>
+
+            <div class="row">
+                <div class="col-2"><p>Country:</p></div>
+                <div class="col-10"><p>@Model.MyRestaurant.Country</p></div>
+            </div>
+
+            <div class="row">
+                <div class="col-2"><p>Business Registration Number:</p></div>
+                <div class="col-10"><p>@Model.MyRestaurant.BusinessRegistrationNumber</p></div>
+            </div>
+
+            <div class="row">
+                <div class="col-2"><p>Postal Code:</p></div>
+                <div class="col-10"><p>@Model.MyRestaurant.PostalCode</p></div>
+            </div>
+
+            <div class="row">
+                <div class="col-2"><p>Phone:</p></div>
+                <div class="col-10"><p>@Model.MyRestaurant.Phone</p></div>
+            </div>
+        </div>
+        <div class="footer p-3">
+            <a class="btn btn-outline-info mt-3" asp-page="/RestaurantUsers/MyRestaurant/EditRestaurant" asp-route-id="@Model.MyRestaurant.Id">Edit Restaurant</a>
+        </div>
+    </div>
 </div>
+
+@if (Model.MyRestaurant.Menu != null)
+{
+    <div class="p-4">
+        <div class="card w-auto">
+            <div class="text-center">
+                <h3 class="card-title card-header">@Model.MyRestaurant.Menu.Name</h3>
+                <p class="card-text pt-3"> @Model.MyRestaurant.Menu.Description</p>
+            </div>
+            @foreach (var foodCategory in Model.MyRestaurant.Menu.FoodCategories)
+            {
+                <div class="row p-3">
+                    <div class="col-6">
+                        <div class="form-group"><h5 class="form-label">@foodCategory.Name</h5></div>
+                        <div class="form-group"><p class="form-text">@foodCategory.Description</p></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <ul class="list-group list-group-flush">
+                                @foreach (var foodItem in foodCategory.FoodItems){
+                                    <li class="list-group-item">
+                                        <h6>@foodItem.Name</h6>
+                                        <p>@foodItem.Description</p>
+                                    </li>
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="card-footer">
+                <a asp-page="/RestaurantUsers/MyRestaurant/EditMenu" class="btn btn-outline-primary" asp-route-id="@Model.MyRestaurant.Id"> Edit Menu</a>
+                <a asp-page="/RestaurantUsers/MyRestaurant/DeleteMenu" class="btn btn-outline-danger" asp-route-id="@Model.MyRestaurant.Id"> Delete Menu</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <a class="btn btn-info mt-3" asp-page="/RestauranUsers/MyRestaurant/AddMenu" asp-route-id="@Model.MyRestaurant.Id">Add Menu</a>
+}

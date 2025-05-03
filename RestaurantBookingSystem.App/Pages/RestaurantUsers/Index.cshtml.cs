@@ -32,12 +32,17 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
 
         public IEnumerable<Table> AllTables { get; set; }
 
+        public Restaurant MyRestaurant { get; set; }
+
+        public string OwnerName { get; set; }
+
         public IActionResult OnGet(string view)
         {
             ViewName = string.IsNullOrEmpty(view) ? "_Dashboard" : view;
 
             var restaurantIdClaim = User.FindFirst("RestaurantId");
             var restaurantId = int.Parse(restaurantIdClaim.Value);
+            var restaurant = _restaurantRepository.GetRestaurantById(restaurantId);
      
 
             if (view == "_Employees")
@@ -49,6 +54,14 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
             {
                 AllTables = _restaurantRepository.GetAllTables(restaurantId).OrderBy(x => x.Id);
             }
+
+            if(view == "_MyRestaurant")
+            {
+                MyRestaurant = restaurant;
+            }
+
+            var businessOwner = restaurant.RestaurantUsers.FirstOrDefault(x => x.Role.Name == "Business Owner");
+            OwnerName = $"{businessOwner.FirstName} {businessOwner.LastName}";
 
             return Page();
         }
