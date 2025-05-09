@@ -298,5 +298,17 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
             return employees;
         }
+
+        public Customer? FindCustomer(Customer customer)
+        {
+            var existinCustomer = _context.Customers.FirstOrDefault(x => x.FirstName.Contains(customer.FirstName) && x.LastName.Contains(customer.LastName));
+
+            if (existinCustomer == null)
+            {
+                existinCustomer = _context.Customers.FirstOrDefault(x => x.Phone == customer.Phone);
+            }
+
+            return existinCustomer;
+        }
     }
 }

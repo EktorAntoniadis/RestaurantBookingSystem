@@ -49,7 +49,7 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
         PaginatedList<FoodItem> GetFoodItems(
             int pageIndex,
             int pageSize,
-            string? name,            
+            string? name,
             string? sortColumn = "name",
             string? sortDirection = "asc");
         void UpdateFoodItem(FoodItem item);
@@ -69,5 +69,16 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
         void UpdateTable(Table table);
 
         Table? GetTableById(int id);
+
+        public void AddReservation(Reservation reservation);
+
+        public Reservation? GetReservationById(int id);
+
+        public void UpdateReservation(Reservation reservation);
+
+        public List<Table> GetAvailableTables(int restaurantId,
+            DateOnly reservationDate,
+            TimeOnly reservationTime,
+            int numberOfPeople);
     }
 }

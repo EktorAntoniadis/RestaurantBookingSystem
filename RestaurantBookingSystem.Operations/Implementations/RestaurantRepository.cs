@@ -352,5 +352,44 @@ namespace RestaurantBookingSystem.Repositories.Implementations
                 .Include(x => x.Status)
                 .FirstOrDefault(t => t.Id == id);
         }
+
+        public void AddReservation(Reservation reservation)
+        {
+            _context.Reservations.Add(reservation);
+            _context.SaveChanges();
+        }
+
+        public Reservation? GetReservationById(int id)
+        {
+            return _context.Reservations
+                .Include(x => x.Customer)
+                .Include(x => x.TableOrder)
+                .ThenInclude(x => x.OrderStatus)
+                .Include(x => x.ReservationStatus)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
+        public void UpdateReservation(Reservation reservation)
+        {
+            _context.Reservations.Update(reservation);
+            _context.SaveChanges();
+        }
+
+        public List<Table> GetAvailableTables(int restaurantId, DateOnly reservationDate, TimeOnly reservationTime, int numberOfPeople)
+        {
+            var reservedTableIds = _context.Reservations
+                .Where(x => x.RestaurantId == restaurantId &&
+                x.ReservationDate == reservationDate &&
+                x.ReservationTime == reservationTime)
+                .Select(r => r.TableOrder.TableId)
+                .Distinct().ToList();
+
+            var availalableTables = _context.Tables.Where(t => t.RestaurantId == restaurantId &&
+            t.NumberOfPeople == numberOfPeople &&
+            !reservedTableIds.Contains(t.Id) &&
+            t.Status.Status != "Out of Service").ToList();
+
+            return availalableTables;
+        }
     }
 }

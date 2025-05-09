@@ -208,6 +208,7 @@ namespace RestaurantBookingSystem.Data.Seeding
             if (!_context.OrderStatuses.Any())
             {
                 _context.OrderStatuses.AddRange(
+                    new OrderStatus { Status = "Pending" },
                     new OrderStatus { Status = "Ordered" },
                     new OrderStatus { Status = "Preparing" },
                     new OrderStatus { Status = "Ready" },
@@ -220,8 +221,6 @@ namespace RestaurantBookingSystem.Data.Seeding
             {
                 _context.TableStatuses.AddRange(
                     new TableStatus { Status = "Available" },
-                    new TableStatus { Status = "Reserved" },
-                    new TableStatus { Status = "Occupied" },
                     new TableStatus { Status = "Cleaning" },
                     new TableStatus { Status = "Out of Service" }
                 );
