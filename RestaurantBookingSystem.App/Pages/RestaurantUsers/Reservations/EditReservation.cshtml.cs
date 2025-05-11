@@ -67,27 +67,17 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Reservations
                     Text = $"{x.TableName}, {x.NumberOfPeople} people",
                     Value = x.Id.ToString()
                 }).ToList(),
+                Employees = waiters.Select(x=> new SelectListItem
+                {
+                    Text = $"{x.FirstName} {x.LastName}",
+                    Value = x.Id.ToString()
+                }).ToList()
             };
             return Page();
         }
 
         public IActionResult OnPostUpdateReservation(int id)
         {
-            var availableTables = _restaurantRepository.GetAvailableTables(
-               EditReservationViewModel.RestaurantId,
-               EditReservationViewModel.ReservationDate,
-               EditReservationViewModel.ReservationTime,
-               EditReservationViewModel.NumberOfPeople);
-
-            if (!availableTables.Any())
-            {
-                ErrorMessage = "No tables available for the specific date and time";
-                return Page();
-            }
-
-            var orderStatuses = _restaurantRepository.GetOrderStatuses();
-            var table = availableTables.FirstOrDefault(x => x.Id == EditReservationViewModel.SelectedTableId);
-            
             var currentReservation = _restaurantRepository.GetReservationById(id);
 
             currentReservation.ReservationDate = EditReservationViewModel.ReservationDate;

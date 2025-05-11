@@ -1,11 +1,66 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model RestaurantBookingSystem.App.Pages.RestaurantUsers.IndexModel
 @{
+    var daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+    var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).DayOfWeek;
+    var currentDay = DateOnly.FromDateTime(DateTime.Now);
 }
 
-
-
 <div class="container">
-    <h2>Reservations</h2>
+    <h2>Reservations Calendar</h2>
+</div>
+
+<a class="btn btn-info mt-3 mb-3" asp-page="/RestaurantUsers/Reservations/AddReservation">New Reservation</a>
+
+<table class="table table-bordered calendar">
+    <thead>
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+    </thead>
+        <tbody>
+        <tr>
+            @for (var i = 0; i < (int)firstDayOfMonth; i++)
+            {
+                <td></td>
+            }
+
+            @for (var day = 1; day <= daysInMonth; day++)
+            {
+                Model.ReservationDate = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, day);
+
+                if ((int)(firstDayOfMonth + day - 1) % 7 == 0)
+                {
+                    @: </tr><tr>
+                }
+
+                <td class="@((Model.ReservationDate == currentDay) ? "bg-info text-white" : "")">
+                    <a asp-page-handler="DailyReservations" class="btn btn-link" asp-route-date="@Model.ReservationDate.ToString("yyyy-MM-dd")">
+                        @day
+                    </a>
+                </td>
+            }
+
+            @for (var i = (int)(firstDayOfMonth + daysInMonth - 1) % 7; i < 6; i++)
+            {
+                <td></td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+<div id="daily-reservations-container">
+    @if (Model.RestaurantReservations?.TotalCount > 0)
+    {
+        <partial name="_DailyReservations" model="Model" />
+    }
+    else
+    {
+        <p>No reservations for today.</p>
+    }
 </div>

@@ -65,8 +65,8 @@
             <select asp-for="@Model.EditReservationViewModel.SelectedEmployeeId" asp-items="Model.EditReservationViewModel.Employees" class="form-control">
                 <option value="">-- Select Waiter --</option>
             </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Create Reservation</button>
-        <a class="btn btn-secondary" asp-page="/RestaurantUsers/Index" asp-route-view="_Reservations">Back</a>
+        </div>      
     </div>
+    <button type="submit" class="btn btn-primary">Edit Reservation</button>
+    <a class="btn btn-secondary" asp-page="/RestaurantUsers/Index" asp-route-view="_Reservations">Back</a>
 </form>

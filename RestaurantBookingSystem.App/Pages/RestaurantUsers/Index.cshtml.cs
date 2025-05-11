@@ -5,6 +5,7 @@ using RestaurantBookingSystem.Data.Models;
 using RestaurantBookingSystem.Operations.Pagination;
 using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Repositories.Implementations;
+using RestaurantBookingSystem.Services.BusinessLogic.Interfaces;
 using System.Data;
 
 namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
@@ -15,18 +16,37 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
 
         private readonly IUserRepository _userRepository;
         private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IRestaurantService _restaurantService;
 
         public IndexModel(
             IUserRepository userRepository,
-            IRestaurantRepository restaurantRepository)
+            IRestaurantRepository restaurantRepository,
+            IRestaurantService restaurantService)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _restaurantRepository = restaurantRepository ?? throw new ArgumentNullException(nameof(restaurantRepository));
+            _restaurantService = restaurantService ?? throw new ArgumentNullException(nameof(restaurantService));
         }
 
-        public string? ViewRoles { get; set; }
+        [FromQuery]
+        public int PageIndex { get; set; } = 1;
 
-        public IEnumerable<Role> Roles { get; set; }
+        [FromQuery]
+        public string? SortColumn { get; set; }
+
+        [FromQuery]
+        public string? SortDirection { get; set; } = "desc";
+
+        [FromQuery]
+        public DateOnly ReservationDate { get; set; }
+
+        [FromQuery]
+        public string CustomerFirstName { get; set; }
+
+        [FromQuery]
+        public string CustomerLastName { get; set; }
+        [FromQuery]
+        public string CustomerPhoneNumber { get; set; }
 
         public IEnumerable<RestaurantUser> Employees { get; set; }
 
@@ -35,6 +55,8 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
         public Restaurant MyRestaurant { get; set; }
 
         public string OwnerName { get; set; }
+
+        public PaginatedList<Reservation> RestaurantReservations { get; set; }
 
         public IActionResult OnGet(string view)
         {
@@ -60,10 +82,54 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
                 MyRestaurant = restaurant;
             }
 
+
+            if (view == "_Reservations")
+            {
+                SortColumn = "ReservationDate";
+                RestaurantReservations = _restaurantRepository.GetReservationsByRestaurant(
+                    PageIndex,
+                    10,
+                    restaurantId,
+                    DateOnly.FromDateTime(DateTime.Today),
+                    SortColumn,
+                    SortDirection);
+            }
+
             var businessOwner = restaurant.RestaurantUsers.FirstOrDefault(x => x.Role.Name == "Business Owner");
             OwnerName = $"{businessOwner.FirstName} {businessOwner.LastName}";
 
             return Page();
         }
+
+        public IActionResult OnGetDailyReservations(DateOnly date)
+        {
+            ViewName = "_Reservations";
+            var restaurantIdClaim = User.FindFirst("RestaurantId");
+            var restaurantId = int.Parse(restaurantIdClaim.Value);
+            RestaurantReservations = _restaurantRepository.GetReservationsByRestaurant(
+                   PageIndex,
+                   10,
+                   restaurantId,
+                   date,
+                   SortColumn,
+                   SortDirection);
+            return Page();
+        }
+
+        public IActionResult OnPostCancel(int id)
+        {
+            ViewName = "_Reservations";
+            _restaurantService.CancelReservation(id);
+            return Page();
+        }
+
+        public IActionResult OnPostConfirm(int id)
+        {
+            ViewName = "_Reservations";
+            _restaurantService.ConfirmReservation(id);
+            return Page();
+        }
     }
 }
+
+

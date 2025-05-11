@@ -21,6 +21,38 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
             _restaurantRepository = restaurantRepository ?? throw new ArgumentNullException(nameof(restaurantRepository));
             _userRepository = userRepository;
         }
+
+        public void CancelReservation(int id)
+        {
+            var reservation = _restaurantRepository.GetReservationById(id);
+            var reservationStatuses = _restaurantRepository.GetReservationStatuses();
+            var cancelledStatuts = reservationStatuses.FirstOrDefault(x => x.Status == "Cancelled");
+
+            var orderStatuses = _restaurantRepository.GetOrderStatuses();
+            var cancelledOrder = orderStatuses.FirstOrDefault(x => x.Status == "Cancelled");
+
+            reservation.ReservationStatus = cancelledStatuts;
+            reservation.TableOrder.OrderStatus = cancelledOrder;
+
+            _restaurantRepository.UpdateReservation(reservation);
+        }
+
+        public void ChangeTableStatus(int tableId, string status)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ConfirmReservation(int id)
+        {
+            var reservation = _restaurantRepository.GetReservationById(id);
+            var reservationStatuses = _restaurantRepository.GetReservationStatuses();
+            var confirmedStatus = reservationStatuses.FirstOrDefault(x => x.Status == "Confirmed");
+
+            reservation.ReservationStatus = confirmedStatus;
+
+            _restaurantRepository.UpdateReservation(reservation);
+        }
+
         public bool SaveNewResevation(Reservation reservation)
         {
             if (reservation.RestaurantId == 0)

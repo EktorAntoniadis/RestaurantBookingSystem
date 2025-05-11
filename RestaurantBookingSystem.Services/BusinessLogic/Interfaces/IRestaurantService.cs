@@ -10,5 +10,11 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Interfaces
     public interface IRestaurantService
     {
         public bool SaveNewResevation(Reservation reservation);
+
+        public void ChangeTableStatus(int tableId, string status);
+
+        public void CancelReservation(int id);
+
+        public void ConfirmReservation(int id);
     }
 }
