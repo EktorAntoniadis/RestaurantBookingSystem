@@ -1,6 +1,72 @@
-﻿@page
+﻿@page "{id:int}"
 @model RestaurantBookingSystem.App.Pages.RestaurantUsers.Reservations.EditReservationModel
 @{
     ViewData["Title"] = "Edit Reservation";
     Layout = "_RestaurantUserLayout";
 }
+
+@section EmployeeSideBar {
+    <partial name="RestaurantUsers/_EmployeeSideBar" />
+}
+
+<form method="post" asp-page-handler="UpdateReservation">
+    <input type="hidden" asp-for="@Model.EditReservationViewModel.RestaurantId" />
+    <input type="hidden" asp-for="@Model.EditReservationViewModel.ReservationId" />
+    <div class="row">
+        <h3>Customers Details</h3>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.CustomerFirstName" class="form-label">Customer first name</label>
+            <input disabled asp-for="@Model.EditReservationViewModel.CustomerFirstName" class="form-control" />
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.CustomerLastName" class="form-label">Customer last name</label>
+            <input disabled asp-for="@Model.EditReservationViewModel.CustomerLastName" class="form-control" />
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.CustomerPhoneNumber" class="form-label">Phone number</label>
+            <input disabled asp-for="@Model.EditReservationViewModel.CustomerPhoneNumber" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>Reservation Details</h3>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.ReservationDate" class="form-label">Reservation Date</label>
+            <input asp-for="@Model.EditReservationViewModel.ReservationDate" class="form-control" type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.ReservationTime" class="form-label">Reservation time</label>
+            <input asp-for="@Model.EditReservationViewModel.ReservationTime" type="time" class="form-control" min="12:00" max="23:59" />
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.NumberOfPeople" class="form-label">Number of people</label>
+            <input asp-for="@Model.EditReservationViewModel.NumberOfPeople" class="form-control" />
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.SelectedTableId" class="form-label">Table</label>
+            <select asp-for="@Model.EditReservationViewModel.SelectedTableId" class="form-control" asp-items="Model.EditReservationViewModel.AvailableTables">
+                <option value="">-- Select Table --</option>
+            </select>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.SelectedReservationStatusId" class="form-label">Reservation Status</label>
+            <select asp-for="@Model.EditReservationViewModel.SelectedReservationStatusId" class="form-control" asp-items="Model.EditReservationViewModel.ReservationStatuses">
+                <option value="">-- Select  Status --</option>
+            </select>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.EditReservationViewModel.SelectedOrderStatusId" class="form-label">Order Status</label>
+            <select asp-for="@Model.EditReservationViewModel.SelectedOrderStatusId" class="form-control" asp-items="Model.EditReservationViewModel.OrderStatuses">
+                <option value="">-- Select  Status --</option>
+            </select>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label class="form-label" asp-for="@Model.EditReservationViewModel.Employees">Assigned to</label>
+            <select asp-for="@Model.EditReservationViewModel.SelectedEmployeeId" asp-items="Model.EditReservationViewModel.Employees" class="form-control">
+                <option value="">-- Select Waiter --</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Reservation</button>
+        <a class="btn btn-secondary" asp-page="/RestaurantUsers/Index" asp-route-view="_Reservations">Back</a>
+    </div>
+</form>

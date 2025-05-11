@@ -1,4 +1,4 @@
-﻿@page "{id:int}";
+﻿@page
 @model RestaurantBookingSystem.App.Pages.RestaurantUsers.Reservations.AddReservationModel
 @{
     ViewData["Title"] = "Add Reservation";
@@ -15,15 +15,15 @@
         <h3>Customers Details</h3>
         <div class="form-group mt-3">
             <label asp-for="@Model.AddReservationData.CustomerFirstName" class="form-label">Customer first name</label>
-            <input asp-for="@Model.AddReservationData.CustomerFirstName" class="form-control" />
+            <input asp-for="@Model.AddReservationData.CustomerFirstName" class="form-control" required/>
         </div>
         <div class="form-group mt-3">
             <label asp-for="@Model.AddReservationData.CustomerLastName" class="form-label">Customer last name</label>
-            <input asp-for="@Model.AddReservationData.CustomerLastName" class="form-control" />
+            <input asp-for="@Model.AddReservationData.CustomerLastName" class="form-control" required />
         </div>
         <div class="form-group mt-3">
             <label asp-for="@Model.AddReservationData.CustomerPhoneNumber" class="form-label">Phone number</label>
-            <input asp-for="@Model.AddReservationData.CustomerPhoneNumber" class="form-control" />
+            <input asp-for="@Model.AddReservationData.CustomerPhoneNumber" class="form-control" required />
         </div>
     </div>
 
@@ -31,15 +31,15 @@
         <h3>Reservation Details</h3>
         <div class="form-group mt-3">
             <label asp-for="@Model.AddReservationData.ReservationDate" class="form-label">Reservation Date</label>
-            <input asp-for="@Model.AddReservationData.ReservationDate" class="form-control" type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <input asp-for="@Model.AddReservationData.ReservationDate" class="form-control" required type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
         </div>
         <div class="form-group mt-3">
             <label asp-for="@Model.AddReservationData.ReservationTime" class="form-label">Reservation time</label>
-            <input asp-for="@Model.AddReservationData.ReservationTime" type="time" class="form-control" min="12:00" max="23:59" />
+            <input asp-for="@Model.AddReservationData.ReservationTime" type="time" class="form-control" required min="12:00" max="23:59" />
         </div>
         <div class="form-group mt-3">
             <label asp-for="@Model.AddReservationData.NumberOfPeople" class="form-label">Number of people</label>
-            <input asp-for="@Model.AddReservationData.NumberOfPeople" class="form-control" />
+            <input asp-for="@Model.AddReservationData.NumberOfPeople" class="form-control" required />
         </div>
         <div class="form-group mt-3">
             <label asp-for="@Model.AddReservationData.SelectedTableId" class="form-label">Table</label>

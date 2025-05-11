@@ -6,8 +6,8 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Reservations
     {
         public int RestaurantId { get; set; }
         public int? ReservationId { get; set; }
-        public int CustomerId { get; set; }
-
+        public int? SelectedCustomerId { get; set; }
+        public int? SelectedEmployeeId { get; set; }
         public string CustomerFirstName { get; set; }
         public string CustomerLastName { get; set; }
         public string CustomerPhoneNumber { get; set; }
@@ -22,7 +22,6 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers.Reservations
         public List<SelectListItem> ReservationStatuses { get; set; } = new();
         public List<SelectListItem> OrderStatuses { get; set; } = new();
         public List<SelectListItem> AvailableTables { get; set; } = new();
-
-
+        public List<SelectListItem> Employees { get; set; } = new();
     }
 }
