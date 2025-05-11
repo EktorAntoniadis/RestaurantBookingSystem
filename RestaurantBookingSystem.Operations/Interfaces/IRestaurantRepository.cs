@@ -80,5 +80,13 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
             DateOnly reservationDate,
             TimeOnly reservationTime,
             int numberOfPeople);
+
+        public PaginatedList<Reservation> GetReservationsByRestaurant(
+          int pageIndex,
+          int pageSize,
+          int restaurantId,
+          DateOnly? reservationDate,
+          string? sortColumn = "ReservationDate",
+          string? sortDirection = "desc");
     }
 }

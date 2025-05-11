@@ -27,6 +27,7 @@ namespace RestaurantBookingSystem.App
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IRestaurantService, RestaurantService>();
             builder.Services.AddHttpContextAccessor();
 
             var audience = builder.Configuration["JwtSettings:Audience"];
