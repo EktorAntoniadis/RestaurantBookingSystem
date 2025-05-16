@@ -1,0 +1,46 @@
+﻿@model RestaurantBookingSystem.App.Pages.RestaurantUsers.IndexModel
+@{
+    Model.ReservationDate = DateOnly.FromDateTime(DateTime.Today);
+}
+
+
+<div class="container">
+    <h2>Orders</h2>
+</div>
+
+@if (Model.MyOrders.TotalCount > 0)
+{
+    <table class="table table-light table-responsive">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Reservation Date</th>
+                <th>Reservation Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.MyOrders.Records)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Reservation.ReservationDate</td>
+                    <td>@order.Reservation.ReservationTime</td>
+                    <td>@order.OrderStatus.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="pagination">
+    @if (Model.MyOrders.HasPreviousPage)
+    {
+        <a asp-page="/RestaurantUsers/Index" asp-route-view="_Orders" asp-route-PageIndex="@(Model.MyOrders.PageIndex - 1)" class=" btn btn-secondary">Previous</a>
+    }
+
+    @if (Model.MyOrders.HasNextPage)
+    {
+        <a asp-page="/RestaurantUsers/Index" asp-route-view="_Orders" asp-route-PageIndex="@(Model.MyOrders.PageIndex + 1)" class="btn btn-secondary">Next</a>
+    }
+</div>

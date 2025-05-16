@@ -554,5 +554,39 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
             return new PaginatedList<Reservation>(reservations, totalRecords, pageIndex, pageSize);
         }
+
+        public PaginatedList<TableOrder> GetOrders(
+            int restaurantId,
+            DateOnly? reservationDate,
+            int pageIndex,
+            int pageSize,
+            string? sortColumn = "ReservationDate",
+            string? sortDirection = "desc")
+        {
+            var query = _context.TablesOrders
+                .Where(x => x.RestaurantId == restaurantId)
+                .Include(x => x.OrderStatus)
+                .Include(x => x.Reservation)
+                .AsQueryable();
+
+            if (reservationDate.HasValue)
+            {
+                query = query.Where(x => x.Reservation.ReservationDate >= reservationDate);
+            }
+
+            switch (sortColumn)
+            {
+                default:
+                    query = sortDirection == "desc" ? query.OrderByDescending(x => x.Reservation.ReservationDate) : query.OrderBy(x => x.Reservation.ReservationDate);
+                    break;
+            }
+
+            var totalRecords = query.Count();
+
+            var orders = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            return new PaginatedList<TableOrder>(orders, totalRecords, pageIndex, pageSize);
+        }
+
     }
 }

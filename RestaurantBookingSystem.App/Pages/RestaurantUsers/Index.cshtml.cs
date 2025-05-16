@@ -112,6 +112,18 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
                     SortDirection);
             }
 
+            if (view == "_Orders")
+            {
+                SortColumn = "ReservationDate";
+                MyOrders = _restaurantRepository.GetOrders(
+                    restaurantId,
+                    ReservationDate,
+                    PageIndex,
+                    10,
+                    SortColumn,
+                    SortDirection);
+            }
+
             var businessOwner = restaurant.RestaurantUsers.FirstOrDefault(x => x.Role.Name == "Business Owner");
             OwnerName = $"{businessOwner.FirstName} {businessOwner.LastName}";
 

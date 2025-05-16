@@ -4,14 +4,20 @@
     Layout = "_Layout";
 }
 
-<form method="post">
-    <div class="form-group mt-3">
-        <label asp-for="Username" class="form-label">Username</label>
-        <input type="text" asp-for="Username" class="form-control" />
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form method="post">
+            <div class="form-group mt-3">
+                <label class="form-label" asp-for="Username">Username</label>
+                <input asp-for="Username" class="form-control" />
+            </div>
+            <div class="form-group mt-3 mb-3">
+                <label class="form-label" asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
     </div>
-    <div class="form-group mt-3">
-        <label asp-for="Password" class="form-label">Password</label>
-        <input type="text" asp-for="Password" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+    <div class="col-4"></div>
+</div>

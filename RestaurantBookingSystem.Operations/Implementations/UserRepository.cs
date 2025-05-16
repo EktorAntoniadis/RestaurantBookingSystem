@@ -312,13 +312,13 @@ namespace RestaurantBookingSystem.Repositories.Implementations
         }
 
         public PaginatedList<Customer> GetCustomersForReservation(
-    int pageIndex,
-    int pageSize,
-    string? firstName = null,
-    string? lastName = null,
-    string? phone = null,
-    string? sortColumn = "FirstName",
-    string? sortDirection = "asc")
+            int pageIndex,
+            int pageSize,
+            string? firstName = null,
+            string? lastName = null,
+            string? phone = null,
+            string? sortColumn = "FirstName",
+            string? sortDirection = "asc")
         {
             var query = _context.Customers.AsQueryable();
 
@@ -354,16 +354,19 @@ namespace RestaurantBookingSystem.Repositories.Implementations
             return new PaginatedList<Customer>(customers, totalRecords, pageIndex, pageSize);
         }
 
-        public PaginatedList<Customer> GetCustomersForReservation(
-    int pageIndex,
-    int pageSize,
-    string? firstName = null,
-    string? lastName = null,
-    string? phone = null,
-    string? sortColumn = "FirstName",
-    string? sortDirection = "asc")
+        public PaginatedList<Customer> GetCustomersByRestaurant(
+             int restaurantId,
+             int pageIndex,
+             int pageSize,
+             string firstName = null,
+             string? lastName = null,
+             string? phone = null,
+             string? sortColumn = "FirstName",
+             string? sortDirection = "asc")
         {
             var query = _context.Customers.AsQueryable();
+
+            query = query.Where(x => x.Reservations.Select(r => r.RestaurantId).Contains(restaurantId));
 
             if (!string.IsNullOrWhiteSpace(firstName))
             {
