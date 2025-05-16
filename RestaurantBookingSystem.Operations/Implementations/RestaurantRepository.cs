@@ -426,5 +426,133 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
             return new PaginatedList<Reservation>(reservations, totalRecords, pageIndex, pageSize);
         }
+
+
+        public PaginatedList<Customer> GetCustomersForReservation(
+            int pageIndex,
+            int pageSize,
+            string? firstName = null,
+            string? lastName = null,
+            string? phone = null,
+            string? sortColumn = "FirstName",
+            string? sortDirection = "asc")
+        {
+            var query = _context.Customers.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(firstName))
+            {
+                query = query.Where(x => x.FirstName.Contains(firstName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(lastName))
+            {
+                query = query.Where(x => x.LastName.Contains(lastName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(phone))
+            {
+                query = query.Where(x => x.Phone.Contains(phone));
+            }
+
+            switch (sortColumn)
+            {
+                case "LastName":
+                    query = sortDirection == "desc" ? query.OrderByDescending(x => x.LastName) : query.OrderBy(x => x.LastName);
+                    break;
+                default:
+                    query = sortDirection == "desc" ? query.OrderByDescending(x => x.FirstName) : query.OrderBy(x => x.FirstName);
+                    break;
+            }
+
+            var totalRecords = query.Count();
+
+            var customers = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            return new PaginatedList<Customer>(customers, totalRecords, pageIndex, pageSize);
+        }
+
+        public Customer? FindCustomer(Customer customer)
+        {
+            var existinCustomer = _context.Customers.FirstOrDefault(x => x.FirstName.Contains(customer.FirstName) && x.LastName.Contains(customer.LastName));
+
+            if (existinCustomer == null)
+            {
+                existinCustomer = _context.Customers.FirstOrDefault(x => x.Phone == customer.Phone);
+            }
+
+            return existinCustomer;
+        }
+
+        public PaginatedList<Restaurant> GetRestaurantsByLocation(
+            int pageIndex,
+            int pageSize,
+            string? restaurantName = null,
+            string? address = null,
+            string? city = null,
+            string? country = null,
+            string? sortColumn = "City",
+            string? sortDirection = "desc")
+        {
+            var query = _context.Restaurants.Include(x => x.Menu).AsQueryable();
+
+            if (!string.IsNullOrEmpty(restaurantName))
+            {
+                query = query.Where(x => x.Name.Contains(restaurantName));
+            }
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                query = query.Where(x => x.City.Contains(city));
+            }
+
+            if (!string.IsNullOrEmpty(address))
+            {
+                query = query.Where(x => x.Address.Contains(address));
+            }
+
+            if (!string.IsNullOrEmpty(country))
+            {
+                query = query.Where(x => x.Country.Contains(country));
+            }
+
+            switch (sortColumn)
+            {
+                default:
+                    query = sortDirection == "desc" ? query.OrderByDescending(x => x.City) : query.OrderBy(x => x.City);
+                    break;
+            }
+
+            var totalRecords = query.Count();
+
+            var restaurants = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            return new PaginatedList<Restaurant>(restaurants, totalRecords, pageIndex, pageSize);
+        }
+
+        public PaginatedList<Reservation> GetCustomerReservations(
+            int pageIndex,
+            int pageSize,
+            int customerId,
+            string? sortColumn = "ReservationDate",
+            string? sortDirection = "desc")
+        {
+            var query = _context.Reservations
+                 .Include(x => x.ReservationStatus)
+                 .Where(x => x.CustomerId == customerId)
+                 .AsQueryable();
+
+            switch (sortColumn)
+            {
+                default:
+                    query = sortDirection == "desc" ? query.OrderByDescending(x => x.ReservationDate) : query.OrderBy(x => x.ReservationDate);
+                    break;
+            }
+
+            var totalRecords = query.Count();
+
+            var reservations = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            return new PaginatedList<Reservation>(reservations, totalRecords, pageIndex, pageSize);
+        }
     }
 }

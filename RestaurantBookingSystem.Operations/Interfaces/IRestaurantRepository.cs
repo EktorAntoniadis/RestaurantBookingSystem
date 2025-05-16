@@ -88,5 +88,33 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
           DateOnly? reservationDate,
           string? sortColumn = "ReservationDate",
           string? sortDirection = "desc");
+
+
+        public PaginatedList<TableOrder> GetOrders(
+            int restaurantId,
+            DateOnly? reservationDate,
+            int pageIndex,
+            int pageSize,
+             string? sortColumn = "ReservationDate",
+            string? sortDirection = "desc");
+
+        public PaginatedList<Restaurant> GetRestaurantsByLocation(
+            int pageIndex,
+            int pageSize,
+            string? restaurantName = null,
+            string? address = null,
+            string? city = null,
+            string? country = null,
+            string? sortColumn = "City",
+            string? sortDirection = "desc");
+
+        public PaginatedList<Reservation> GetCustomerReservations(
+             int pageIndex,
+            int pageSize,
+            int customerId,
+            string? sortColumn = "ReservationDate",
+            string? sortDirection = "desc"
+            );
+
     }
 }

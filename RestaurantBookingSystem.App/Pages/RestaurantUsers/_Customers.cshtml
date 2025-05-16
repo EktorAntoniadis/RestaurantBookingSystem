@@ -1,9 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model RestaurantBookingSystem.App.Pages.RestaurantUsers.IndexModel
 @{
 }
 
+
 <div class="container">
     <h2>Registered Customers</h2>
+</div>
+
+<form method="get" class="mb-4 mt-4">
+    <input type="hidden" name="view" value="_Customers" />
+    <div class="row mb-3">
+        <div class="col-3">
+            <input type="text" name="CustomerFirstName" value="@Model.CustomerFirstName" class="form-control" placeholder="Search by first name" />
+        </div>
+        <div class="col-3">
+            <input type="text" name="CustomerLastName" value="@Model.CustomerLastName" class="form-control" placeholder="Search by last name" />
+        </div>
+        <div class="col-3">
+            <input type="text" name="CustomerPhoneNumber" value="@Model.CustomerPhoneNumber" class="form-control" placeholder="Search by phone number" />
+        </div>
+        <div class="col-3">
+            <button asp-route-view="_Customers" type="submit" class="btn btn-primary">Search</button>
+            <a asp-page="/RestaurantUsers/Index" asp-route-view="_Customers" class="btn btn-secondary">Reset</a>
+        </div>
+    </div>
+</form>
+
+@if (Model.MyCustomers.TotalCount > 0)
+{
+    <table class="table table-light table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone Number</th>
+                <th>Registration Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model.MyCustomers.Records)
+            {
+                <tr>
+                    <td>@customer.Id</td>
+                    <td>@customer.FirstName</td>
+                    <td>@customer.LastName</td>
+                    <td>@customer.Phone</td>
+                    <td>@customer.RegistrationDate</td>
+                    <td><a class="btn btn-primary" asp-page="/RestaurantUsers/Customers/ViewCustomer" asp-route-id="@customer.Id">View Customer</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="pagination">
+    @if (Model.MyCustomers.HasPreviousPage)
+    {
+        <a asp-page="/RestaurantUsers/Index" asp-route-view="_Customers" asp-route-PageIndex="@(Model.MyCustomers.PageIndex - 1)" class=" btn btn-secondary">Previous</a>
+    }
+
+    @if (Model.MyCustomers.HasNextPage)
+    {
+        <a asp-page="/RestaurantUsers/Index" asp-route-view="_Customers" asp-route-PageIndex="@(Model.MyCustomers.PageIndex + 1)" class="btn btn-secondary">Next</a>
+    }
 </div>

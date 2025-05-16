@@ -53,6 +53,9 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
         public IEnumerable<Table> AllTables { get; set; }
 
         public Restaurant MyRestaurant { get; set; }
+        public PaginatedList<Customer> MyCustomers { get; set; }
+
+        public PaginatedList<TableOrder> MyOrders { get; set; }
 
         public string OwnerName { get; set; }
 
@@ -91,6 +94,20 @@ namespace RestaurantBookingSystem.App.Pages.RestaurantUsers
                     10,
                     restaurantId,
                     DateOnly.FromDateTime(DateTime.Today),
+                    SortColumn,
+                    SortDirection);
+            }
+
+            if (view == "_Customers")
+            {
+                SortColumn = "LastName";
+                MyCustomers = _userRepository.GetCustomersByRestaurant(
+                    restaurantId,
+                    PageIndex,
+                    10,
+                    CustomerFirstName,
+                    CustomerLastName,
+                    CustomerPhoneNumber,
                     SortColumn,
                     SortDirection);
             }

@@ -50,5 +50,24 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
         RestaurantUser? GetRestaurantUserByUsername(string username);
         public IEnumerable<RestaurantUser> GetEmployeesByRestaurant(int restaurantId);
         public Customer? FindCustomer(Customer customer);
+        public PaginatedList<Customer> GetCustomersByRestaurant(
+          int restaurantId,
+          int pageIndex,
+          int pageSize,
+          string? firstName = null,
+          string? lastName = null,
+          string? phone = null,
+          string? sortColumn = "FirstName",
+          string? sortDirection = "asc"
+          );
+
+        public PaginatedList<Customer> GetCustomersForReservation(int pageIndex,
+            int pageSize,
+            string? firstName = null,
+            string? lastName = null,
+            string? phone = null,
+            string? sortColumn = "FirstName",
+            string? sortDirection = "asc");
+
     }
 }
