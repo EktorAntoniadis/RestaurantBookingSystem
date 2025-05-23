@@ -15,6 +15,9 @@ namespace RestaurantBookingSystem.Data.Models
         public int Id { get; set; }
         public DateOnly RegistrationDate { get; set; }
         public TimeOnly RegistrationTime { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
 
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantBookingSystem.Data.Models;
 
@@ -11,9 +12,11 @@ using RestaurantBookingSystem.Data.Models;
 namespace RestaurantBookingSystem.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingSystemDbContext))]
-    partial class RestaurantBookingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250523105528_UpdateCustomerModel")]
+    partial class UpdateCustomerModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
