@@ -4,6 +4,11 @@
     Layout = "_CustomerLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to customers pages</h1>
-</div>
+@if (!string.IsNullOrEmpty(Model.ViewName))
+{
+    @await Html.PartialAsync(Model.ViewName)
+}
+else
+{
+    <p>No content to display.</p>
+}
