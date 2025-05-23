@@ -2,3 +2,58 @@
 @model RestaurantBookingSystem.App.Pages.Profile.RegisterModel
 @{
 }
+
+<h2>Become a member</h2>
+
+<form method="post" asp-page-handler="RegisterMember">
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.FirstName">First name</label>
+        <input class="form-control" asp-for="RegisterCustomer.FirstName" />
+        <span asp-validation-for="RegisterCustomer.FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.LastName">Last name</label>
+        <input class="form-control" asp-for="RegisterCustomer.LastName" />
+        <span asp-validation-for="RegisterCustomer.LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.Email">Email</label>
+        <input class="form-control" asp-for="RegisterCustomer.Email" />
+        <span asp-validation-for="RegisterCustomer.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.Address">Address</label>
+        <input class="form-control" asp-for="RegisterCustomer.Address" />
+        <span asp-validation-for="RegisterCustomer.Address" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.City">City</label>
+        <input class="form-control" asp-for="RegisterCustomer.City" />
+        <span asp-validation-for="RegisterCustomer.City" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.Country">Country</label>
+        <input class="form-control" asp-for="RegisterCustomer.Country" />
+        <span asp-validation-for="RegisterCustomer.Country" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.Username">Username</label>
+        <input class="form-control" asp-for="RegisterCustomer.Username" />
+        <span asp-validation-for="RegisterCustomer.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.Password">Password</label>
+        <input class="form-control" asp-for="RegisterCustomer.Password" type="password" />
+        <span asp-validation-for="RegisterCustomer.Password" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <label class="form-label" asp-for="RegisterCustomer.Phone">Phone</label>
+        <input class="form-control" asp-for="RegisterCustomer.Phone" type="text" />
+        <span asp-validation-for="RegisterCustomer.Phone" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-info" asp-page-handler="RegisterMember">Register</button>
+    </div>
+
+
+</form>

@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RestaurantBookingSystem.Operations.Repositories.Interfaces;
 using RestaurantBookingSystem.Services.BusinessLogic.Interfaces;
 
 namespace RestaurantBookingSystem.App.Pages.Profile
 {
-    public class LoginModel : PageModel
+    public class CustomerLoginModel : PageModel
     {
-        private readonly IUserService _userService;
-        
-        public LoginModel(IUserService userService)
+        private IUserService _userService;
+
+        public CustomerLoginModel(IUserService userService)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
@@ -19,22 +18,17 @@ namespace RestaurantBookingSystem.App.Pages.Profile
 
         [BindProperty]
         public string Password { get; set; }
-
         public IActionResult OnGet()
         {
-            if(Request.Cookies.TryGetValue("jwt_token", out string token))
+            if (Request.Cookies.TryGetValue("jwt_token", out string token))
             {
                 var (isValid, userType) = _userService.IsTokenValid(token);
 
                 if (isValid)
                 {
-                    return userType switch
-                    {
-                        "SystemUser" => RedirectToPage("/Administration/Index", new { view = "_Dashboard" }),
-                        "RestaurantUser" => RedirectToPage("/RestaurantUsers/Index", new { view = "_Dashboard" }),
-                        _ => RedirectToPage("/Profile/Login")
-                    };
+                    return RedirectToPage("/Customers/Index", new { view = "_Reservations" });
                 }
+
             }
 
             return Page();
@@ -44,7 +38,7 @@ namespace RestaurantBookingSystem.App.Pages.Profile
         {
             try
             {
-                var (token, userType, restaurantIdentifier) = _userService.CreateTokenForUserWithRole(Username, Password);
+                var token = _userService.CreateTokenForCustomer(Username, Password);
                 Response.Cookies.Append("jwt_token", token, new CookieOptions
                 {
                     HttpOnly = true,
@@ -53,15 +47,9 @@ namespace RestaurantBookingSystem.App.Pages.Profile
                     Expires = DateTime.Now.AddMinutes(60)
                 });
 
-                return userType switch
-                {
-                    "SystemUser" => RedirectToPage("/Administration/Index", new { view = "_Dashboard" }),
-                    "RestaurantUser" => RedirectToPage("/RestaurantUsers/Index", new { view = "_Dashboard" }),
-                    _ => RedirectToPage("/Profile/Login")
-                };
-
+                return RedirectToPage("/Customers/Index", new { view = "_Reservations" });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
