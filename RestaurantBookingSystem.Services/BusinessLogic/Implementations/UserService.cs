@@ -136,7 +136,7 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
             }
 
             if (user is SystemUser systemUser)
-            {               
+            {
                 claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.NameIdentifier, systemUser.Id.ToString()),
@@ -148,7 +148,24 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
                     new Claim("UserType", "SystemUser")
                 };
             }
-           
+
+            if (user is Customer customer)
+            {
+                claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
+                    new Claim(ClaimTypes.Name, customer.Username),
+                    new Claim(ClaimTypes.Surname, customer.LastName),
+                    new Claim(ClaimTypes.GivenName, customer.FirstName),
+                    new Claim(ClaimTypes.MobilePhone, customer.Phone),
+                    new Claim(ClaimTypes.Email, customer.Email),
+                    new Claim(ClaimTypes.Locality, customer.City),
+                    new Claim(ClaimTypes.Country, customer.Country),
+                    new Claim(ClaimTypes.StreetAddress, customer.Address),
+                    new Claim("UserType", "Customer"),
+                };
+            }
+
             return claims;
         }
 

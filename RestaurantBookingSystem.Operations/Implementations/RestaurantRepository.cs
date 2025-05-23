@@ -588,5 +588,23 @@ namespace RestaurantBookingSystem.Repositories.Implementations
             return new PaginatedList<TableOrder>(orders, totalRecords, pageIndex, pageSize);
         }
 
+        public PaginatedList<Reservation> GetPastReservationsByUser(int pageIndex, int pageSize, int userId)
+        {
+            var query = _context.Reservations
+                .Include(x => x.Restaurant)
+                .Include(x => x.ReservationStatus)
+                .AsQueryable();
+
+            query = query.Where(x => x.CustomerId == userId);
+
+            query = query.OrderByDescending(x => x.ReservationDate);
+
+            var totalRecords = query.Count();
+
+            var reservations = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            return new PaginatedList<Reservation>(reservations, totalRecords, pageIndex, pageSize);
+        }
+
     }
 }

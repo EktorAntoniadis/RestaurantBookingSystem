@@ -116,5 +116,7 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
             string? sortDirection = "desc"
             );
 
+        public PaginatedList<Reservation> GetPastReservationsByUser(int pageIndex, int pageSize, int userId);
+
     }
 }
