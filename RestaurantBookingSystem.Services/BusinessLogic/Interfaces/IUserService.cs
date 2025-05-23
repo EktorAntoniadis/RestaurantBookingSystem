@@ -13,5 +13,8 @@ public interface IUserService
 
     (bool IsValid, string UserType) IsTokenValid(string token);
 
-    (string Token, string UserType, int RestaurantId) CreateTokenForUer(string username, string password);
+    (string Token, string UserType, int RestaurantId) CreateTokenForUserWithRole(string username, string password);
+
+    public string CreateTokenForCustomer(string username, string password);
+
 }

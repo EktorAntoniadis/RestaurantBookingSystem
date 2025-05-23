@@ -399,5 +399,29 @@ namespace RestaurantBookingSystem.Repositories.Implementations
 
             return new PaginatedList<Customer>(customers, totalRecords, pageIndex, pageSize);
         }
+
+        public Customer? GetCustomerByUsername(string username)
+        {
+            var customer = _context.Customers.FirstOrDefault(x => x.Username == username);
+            return customer;
+        }
+
+        public bool IsExistingCustomer(Customer customer)
+        {
+            var existingCustomer = _context.Customers
+                .Where(x => x.Username == customer.Username || x.Email == customer.Email).FirstOrDefault();
+
+            if (existingCustomer == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public void AddCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+        }
     }
 }

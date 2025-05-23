@@ -17,6 +17,7 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
         private readonly IConfiguration _configuration;
         private readonly PasswordHasher<RestaurantUser> _restaurantUserPasswordHasher;
         private readonly PasswordHasher<SystemUser> _systemUserPasswordHasher;
+        private readonly PasswordHasher<Customer> _customerHasher;
 
         public UserService(IUserRepository userRepository, IConfiguration configuration)
         {
@@ -24,8 +25,9 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _restaurantUserPasswordHasher = new PasswordHasher<RestaurantUser>();
             _systemUserPasswordHasher = new PasswordHasher<SystemUser>();
+            _customerHasher = new PasswordHasher<Customer>();
         }
-        public (string Token, string UserType, int RestaurantId) CreateTokenForUer(string username, string password)
+        public (string Token, string UserType, int RestaurantId) CreateTokenForUserWithRole(string username, string password)
         {
             var systemUser = _userRepository.GetSystemUserByUsername(username);
 
@@ -148,6 +150,25 @@ namespace RestaurantBookingSystem.Services.BusinessLogic.Implementations
             }
            
             return claims;
+        }
+
+        public string CreateTokenForCustomer(string username, string password)
+        {
+            var existingCustomer = _userRepository.GetCustomerByUsername(username);
+
+            if (existingCustomer != null)
+            {
+                var passwordResult = _customerHasher.VerifyHashedPassword(existingCustomer, existingCustomer.Password, password);
+                if (passwordResult == PasswordVerificationResult.Success)
+                {
+                    var claims = SetClaims(existingCustomer);
+
+                    var jwtToken = GenerateToken(claims);
+                    return jwtToken;
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -69,5 +69,11 @@ namespace RestaurantBookingSystem.Operations.Repositories.Interfaces
             string? sortColumn = "FirstName",
             string? sortDirection = "asc");
 
+        public Customer? GetCustomerByUsername(string username);
+
+        public bool IsExistingCustomer(Customer customer);
+
+        public void AddCustomer(Customer customer);
+
     }
 }
