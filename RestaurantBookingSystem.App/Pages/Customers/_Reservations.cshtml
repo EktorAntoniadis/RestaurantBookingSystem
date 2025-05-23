@@ -1,0 +1,59 @@
+﻿@model RestaurantBookingSystem.App.Pages.Customers.IndexModel
+@{}
+
+<table class="table table-light table-responsive">
+    <thead>
+        <tr>
+            <th>Restaurant Name</th>
+            <th>Αddress</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Number of people</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reservation status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.CustomerReservations.Records)
+        {
+            <tr>
+                <td>@reservation.Restaurant.Name</td>
+                <td>@reservation.Restaurant.Address</td>
+                <td>@reservation.Restaurant.City</td>
+                <td>@reservation.Restaurant.Country</td>
+                <td>@reservation.NumberOfPeople</td>
+                <td>@reservation.ReservationDate</td>
+                <td>@reservation.ReservationTime</td>
+                @if (reservation.ReservationStatus.Status == "Completed" || reservation.ReservationStatus.Status == "Cancelled" || reservation.ReservationStatus.Status == "Confirmed")
+                {
+                    <td>@reservation.ReservationStatus.Status</td>
+
+                }
+                else
+                {
+                    <td></td>
+                }
+
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-danger" asp-page="CancelReservation" asp-route-id="@reservation.Id">Cancel Reservation</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination">
+    @if (Model.CustomerReservations.HasPreviousPage)
+    {
+        <a asp-page="/Customers/Index" asp-route-view="_Reservations" asp-route-PageIndex="@(Model.CustomerReservations.PageIndex - 1)" class=" btn btn-secondary">Previous</a>
+    }
+
+    @if (Model.CustomerReservations.HasNextPage)
+    {
+        <a asp-page="/Customers/Index" asp-route-view="_Reservations" asp-route-PageIndex="@(Model.CustomerReservations.PageIndex + 1)" class="btn btn-secondary">Next</a>
+    }
+</div>
