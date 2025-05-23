@@ -17,6 +17,7 @@
                 <th>Reservation Date</th>
                 <th>Reservation Time</th>
                 <th>Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,9 @@
                     <td>@order.Reservation.ReservationDate</td>
                     <td>@order.Reservation.ReservationTime</td>
                     <td>@order.OrderStatus.Status</td>
+                    <td>
+                        <a class="btn btn-primary" asp-page="/Orders/EditOrder">Edit</a>
+                    </td>
                 </tr>
             }
         </tbody>
